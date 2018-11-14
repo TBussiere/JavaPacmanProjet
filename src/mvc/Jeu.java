@@ -75,9 +75,6 @@ public class Jeu extends Observable {
                     }
                 }
             }
-            // notification de la vue, suite à la mise à jour du champ lastValue
-            setChanged();
-            notifyObservers();
 
         } catch (Exception ex) {
             ex.printStackTrace();
