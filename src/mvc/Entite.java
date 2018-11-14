@@ -24,6 +24,15 @@ public abstract class Entite implements Runnable{
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        while(actif) {
+//            realiserAction() ;
+//            setChanged(); // notification de la vue, (4) sur le schéma MVC ci-dessous
+//            notifyObservers();
+//            sleep(tempsEntreActions) ; /* par exemple, Pac-Man est plus rapide durant quelques secondes
+//            après avoir mangé une super-pac-gomme, tempsEntreActions peut varier */
+//        }
+//        grille.retirerDeLEnvironnement(this) ;
+//        setChanged(); // notification de la vue
+//        notifyObservers();
     }
 }
