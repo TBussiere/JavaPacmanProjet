@@ -48,25 +48,24 @@ public class VueControleur extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        
+
         // initialisation du modèle que l'on souhaite utiliser
         m = new Jeu();
         
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
         GridPane grid = new GridPane();
         
-        /*
+        
         for (int i = 0; i < column; i++) {
             for (int j = 0; j < row; j++) {
                 Rectangle r = new Rectangle(30,30);
                 r.setFill(Color.rgb(i+100, j+100, i+j+100));
                 grid.add(r,i,j);
             }
-        }*/
+        }
         
         
-        // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
-        m.addObserver(new Observer() {
+        Observer obs = new Observer() {
             
             @Override
             public void update(Observable o, Object arg) {
@@ -76,11 +75,11 @@ public class VueControleur extends Application {
                     for (int j = 0; j < temp[i].length; j++) {
                         Rectangle r = new Rectangle(30,30);
                         
-                        if (temp[i][j] instanceof Mur) {
+                        if (temp[j][i] instanceof Mur) {
                             r.setFill(Color.rgb(52, 93, 169));
                         }
-                        else if (temp[i][j] instanceof Couloir) {
-                            Couloir c = (Couloir)temp[i][j];
+                        else if (temp[j][i] instanceof Couloir) {
+                            Couloir c = (Couloir)temp[j][i];
                             if (c.asPacman) {
                                 r.setFill(Color.YELLOW);
                             }
@@ -103,8 +102,11 @@ public class VueControleur extends Application {
                     }
                 }
             }
-        });
+        };
         
+        // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
+        m.addObserver(obs);
+        obs.update(m, obs);
         
         /*
         // on efface affichage lors du clic
@@ -128,7 +130,7 @@ public class VueControleur extends Application {
             }
         });*/
         
-        grid.setGridLinesVisible(true);
+        //grid.setGridLinesVisible(true);
        
         
         Scene scene = new Scene(grid, Color.WHITESMOKE);
