@@ -104,6 +104,7 @@ public class VueControleur extends Application {
                 @Override
                 public void handle(MouseEvent event) {
                     affichage.setText(affichage.getText() + t.getText());
+                    
                 }
                 
             });
