@@ -12,6 +12,7 @@ import java.util.Observer;
 import javafx.application.Application;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.DropShadow;
@@ -21,9 +22,13 @@ import javafx.scene.control.Button;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -37,8 +42,6 @@ public class VueControleur extends Application {
     
     // modèle : ce qui réalise le calcule de l'expression
     Modele m;
-    // affiche la saisie et le résultat
-    Text affichage;
     
     @Override
     public void start(Stage primaryStage) {
@@ -47,19 +50,18 @@ public class VueControleur extends Application {
         m = new Modele();
         
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
-        BorderPane border = new BorderPane();
-        
-        // permet de placer les diffrents boutons dans une grille
-        GridPane gPane = new GridPane();
-        
-        int column = 0;
-        int row = 0;
+        int column = 21;
+        int row = 21;
+        GridPane grid = new GridPane();
         
         
-        affichage = new Text("");
-        affichage.setFont(Font.font ("Verdana", 20));
-        affichage.setFill(Color.RED);
-        border.setTop(affichage);
+        for (int i = 0; i < column; i++) {
+            for (int j = 0; j < row; j++) {
+                Rectangle r = new Rectangle(30,30);
+                r.setFill(Color.rgb(i+100, j+100, i+j+100));
+                grid.add(r,i,j);
+            }
+        }
         
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
         m.addObserver(new Observer() {
@@ -67,15 +69,16 @@ public class VueControleur extends Application {
             @Override
             public void update(Observable o, Object arg) {
                 if (!m.getErr()) {
-                    affichage.setText(m.getValue() + "");
+                    
                 } else {
-                    affichage.setText("Err");
+                    
                 }
             }
         });
         
+        /*
         // on efface affichage lors du clic
-        affichage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        test.setOnMouseClicked(new EventHandler<MouseEvent>() {
             
             @Override
             public void handle(MouseEvent event) {
@@ -84,42 +87,7 @@ public class VueControleur extends Application {
             
         });
         
-        // création des bouton et placement dans la grille
-        for (String s : new String[]{"7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "+", "0", "(", ")"}) {
-            final Button t = new Button(s);
-            //t.setWrappingWidth(30);
-            t.setFont(Font.font ("Verdana", 20));
-            t.setTextAlignment(TextAlignment.CENTER);
-            
-            gPane.add(t, column++, row);
-            
-            if (column > 3) {
-                column = 0;
-                row++;
-            }
-            
-            // un controleur (EventHandler) par bouton écoute et met à jour le champ affichage
-            t.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                
-                @Override
-                public void handle(MouseEvent event) {
-                    affichage.setText(affichage.getText() + t.getText());
-                    
-                }
-                
-            });
-            
-            
-            
-        }
         
-        
-        
-        final Text t = new Text("=");
-        t.setWrappingWidth(30);
-        gPane.add(t, column++, row);
-        t.setTextAlignment(TextAlignment.CENTER);
-        //t.setEffect(new Shadow());
         
         // un controleur écoute le bouton "=" et déclenche l'appel du modèle
         t.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -128,15 +96,15 @@ public class VueControleur extends Application {
             public void handle(MouseEvent event) {
                 m.calc(affichage.getText());
             }
-        });
+        });*/
         
-        gPane.setGridLinesVisible(true);
+        grid.setGridLinesVisible(true);
+       
         
-        border.setCenter(gPane);
+        Scene scene = new Scene(grid, Color.WHITESMOKE);
         
-        Scene scene = new Scene(border, Color.LIGHTBLUE);
         
-        primaryStage.setTitle("Calc FX");
+        primaryStage.setTitle("Pacman");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
