@@ -14,7 +14,8 @@ import java.util.Observer;
  */
 public class Jeu extends Observable{
 
-    private Case [][] plateau; 
+    private Case [][] plateau;
+    private Entite [] tabEntites;
 
     @Override
     public void notifyObservers() {
