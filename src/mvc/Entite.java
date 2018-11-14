@@ -10,7 +10,6 @@ package mvc;
  * @author Jean-Baptiste
  */
 public class Entite implements Runnable{
-    protected String type;
     protected String currentDirection;
 
     public String getCurrentDirection() {
@@ -19,14 +18,6 @@ public class Entite implements Runnable{
 
     public void setCurrentDirection(String currentDirection) {
         this.currentDirection = currentDirection;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Override
