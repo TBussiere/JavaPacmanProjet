@@ -17,14 +17,23 @@ public class Jeu extends Observable{
     private Case [][] plateau;
     private Entite [] tabEntites;
 
-    @Override
-    public void notifyObservers() {
-        super.notifyObservers(); //To change body of generated methods, choose Tools | Templates.
+    public Jeu() {
+        ////PLATEAU faire le truc sur fichier externe
+        
+        
+        ////Entitées =>4 fantome =>1 pacman
+        /*
+        tabEntites[0] = new Pacman();
+        tabEntites[1] = new Fantome();
+        tabEntites[2] = new Fantome();
+        tabEntites[3] = new Fantome();
+        tabEntites[4] = new Fantome();
+        */
     }
 
     @Override
-    public synchronized void addObserver(Observer o) {
-        super.addObserver(o); //To change body of generated methods, choose Tools | Templates.
+    public void notifyObservers() {
+        super.notifyObservers(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

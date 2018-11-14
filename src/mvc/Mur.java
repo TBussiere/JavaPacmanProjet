@@ -9,6 +9,6 @@ package mvc;
  *
  * @author Lewho
  */
-public class Case {
+public class Mur {
     
 }

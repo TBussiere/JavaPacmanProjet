@@ -9,6 +9,4 @@ package mvc;
  *
  * @author Lewho
  */
-public class Case {
-    
-}
+public enum TypeGomme {Petite,Grosse}
