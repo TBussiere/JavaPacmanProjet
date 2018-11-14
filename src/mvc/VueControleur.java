@@ -63,6 +63,7 @@ public class VueControleur extends Application {
             }
         }
         
+        
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
         m.addObserver(new Observer() {
             
@@ -75,6 +76,7 @@ public class VueControleur extends Application {
                 }
             }
         });
+        
         
         /*
         // on efface affichage lors du clic
