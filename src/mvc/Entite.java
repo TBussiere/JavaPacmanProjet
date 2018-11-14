@@ -9,9 +9,11 @@ package mvc;
  *
  * @author Jean-Baptiste
  */
-public class Entite implements Runnable{
+public abstract class Entite implements Runnable{
     protected String currentDirection;
-
+    
+    public abstract void realiserAction();
+    
     public String getCurrentDirection() {
         return currentDirection;
     }
