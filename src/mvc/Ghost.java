@@ -5,15 +5,17 @@
  */
 package mvc;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Jean-Baptiste
  */
 public class Ghost extends Entite{
-    private String color;
+    private Color color;
     
     public Ghost(){
-        this.color="";
+        this.color=Color.BLUE;
     }
     
     @Override

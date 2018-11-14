@@ -22,13 +22,12 @@ public class Jeu extends Observable{
         
         
         ////Entitées =>4 fantome =>1 pacman
-        /*
+        
         tabEntites[0] = new Pacman();
-        tabEntites[1] = new Fantome();
-        tabEntites[2] = new Fantome();
-        tabEntites[3] = new Fantome();
-        tabEntites[4] = new Fantome();
-        */
+        tabEntites[1] = new Ghost();
+        tabEntites[2] = new Ghost();
+        tabEntites[3] = new Ghost();
+        tabEntites[4] = new Ghost();
     }
 
     @Override
