@@ -13,7 +13,7 @@ import java.util.Observer;
  * @author Lewho
  */
 public class Jeu extends Observable{
-
+    
     private Case [][] plateau;
     private Entite [] tabEntites;
 
@@ -34,5 +34,14 @@ public class Jeu extends Observable{
     public void notifyObservers() {
         super.notifyObservers(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public Case[][] getPlateau() {
+        return plateau;
+    }
+
+
+    public Entite[] getTabEntites() {
+        return tabEntites;
+    }
+
 }

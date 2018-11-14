@@ -9,6 +9,6 @@ package mvc;
  *
  * @author Lewho
  */
-public class Mur {
+public class Mur extends Case{
     
 }

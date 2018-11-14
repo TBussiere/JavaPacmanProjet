@@ -9,7 +9,7 @@ package mvc;
  *
  * @author Lewho
  */
-public class Couloir {
+public class Couloir extends Case{
     public boolean pac_Gomme;
     public boolean super_Pac_Gomme;
     public boolean asGhost;
