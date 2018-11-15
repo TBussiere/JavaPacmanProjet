@@ -27,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
@@ -56,13 +57,6 @@ public class VueControleur extends Application {
         GridPane grid = new GridPane();
         
         
-        for (int i = 0; i < column; i++) {
-            for (int j = 0; j < row; j++) {
-                Rectangle r = new Rectangle(30,30);
-                r.setFill(Color.rgb(i+100, j+100, i+j+100));
-                grid.add(r,i,j);
-            }
-        }
         
         
         Observer obs = new Observer() {
@@ -77,28 +71,44 @@ public class VueControleur extends Application {
                         
                         if (temp[j][i] instanceof Mur) {
                             r.setFill(Color.rgb(52, 93, 169));
+                            grid.add(r,i,j);
                         }
                         else if (temp[j][i] instanceof Couloir) {
                             Couloir c = (Couloir)temp[j][i];
                             if (c.asPacman) {
                                 r.setFill(Color.YELLOW);
+                                grid.add(r,i,j);
                             }
                             else if (c.asGhost) {
                                 r.setFill(Color.RED);
+                                grid.add(r,i,j);
                             }
                             else if (c.pac_Gomme) {
-                                r.setFill(Color.BEIGE);
+                                r.setFill(Color.BLACK);
+                                grid.add(r,i,j);
+                                
+                                Circle circle = new Circle(5);
+                                BorderPane bp = new BorderPane();
+                                bp.setCenter(circle);
+                                circle.setFill(Color.BEIGE);
+                                grid.add(bp,i,j);
                             }
                             else if (c.super_Pac_Gomme) {
-                                r.setFill(Color.AQUAMARINE);
+                                r.setFill(Color.BLACK);
+                                grid.add(r,i,j);
+                                
+                                
+                                Circle circle = new Circle(8);
+                                BorderPane bp = new BorderPane();
+                                bp.setCenter(circle);
+                                circle.setFill(Color.BEIGE);
+                                grid.add(bp,i,j);
                             }
                             else{
                                 r.setFill(Color.BLACK);
+                                grid.add(r,i,j);
                             }
                         }
-                        
-                        
-                        grid.add(r,i,j);
                     }
                 }
             }
