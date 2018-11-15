@@ -19,6 +19,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.Shadow;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -76,12 +78,24 @@ public class VueControleur extends Application {
                         else if (temp[j][i] instanceof Couloir) {
                             Couloir c = (Couloir)temp[j][i];
                             if (c.asPacman) {
-                                r.setFill(Color.YELLOW);
+                                r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
+                                
+                                Image img = new Image("./ressources/pacman.png");
+                                ImageView imageView = new ImageView(img);
+                                imageView.setFitWidth(25);
+                                imageView.setFitHeight(25);
+                                grid.add(imageView,i,j);
                             }
                             else if (c.asGhost) {
-                                r.setFill(Color.RED);
+                                r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
+                                
+                                Image img = new Image("./ressources/ghost_red.png");
+                                ImageView imageView = new ImageView(img);
+                                imageView.setFitWidth(25);
+                                imageView.setFitHeight(25);
+                                grid.add(imageView,i,j);
                             }
                             else if (c.pac_Gomme) {
                                 r.setFill(Color.BLACK);
@@ -96,8 +110,7 @@ public class VueControleur extends Application {
                             else if (c.super_Pac_Gomme) {
                                 r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
-                                
-                                
+                              
                                 Circle circle = new Circle(8);
                                 BorderPane bp = new BorderPane();
                                 bp.setCenter(circle);
