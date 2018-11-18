@@ -82,7 +82,6 @@ public class Pacman extends Entite {
                     score += 500;
                     ((Couloir) c[nextX][nextY]).super_Pac_Gomme = false;
                 }
-                j.newChange();
             }
         }
     }

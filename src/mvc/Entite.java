@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public abstract class Entite implements Runnable{
     protected Direction currentDirection;
-    protected int tempsEntreActions = 500;
+    protected int tempsEntreActions = 250;
     protected Jeu j;
     
     public abstract void realiserAction();
