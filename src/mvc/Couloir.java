@@ -24,6 +24,7 @@ public class Couloir extends Case{
         }
         else if (e instanceof Pacman) {
             asPacman = true;
+            
         }
 
     }

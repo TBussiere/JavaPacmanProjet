@@ -5,34 +5,43 @@
  */
 package mvc;
 
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jean-Baptiste
  */
 public abstract class Entite implements Runnable{
-    protected String currentDirection;
+    protected Direction currentDirection;
+    protected int tempsEntreActions = 500;
+    protected Jeu j;
     
     public abstract void realiserAction();
     
-    public String getCurrentDirection() {
+    public Direction getCurrentDirection() {
         return currentDirection;
     }
 
-    public void setCurrentDirection(String currentDirection) {
+    public void setCurrentDirection(Direction currentDirection) {
         this.currentDirection = currentDirection;
     }
 
     @Override
     public void run() {
-//        while(actif) {
-//            realiserAction() ;
-//            setChanged(); // notification de la vue, (4) sur le schéma MVC ci-dessous
-//            notifyObservers();
-//            sleep(tempsEntreActions) ; /* par exemple, Pac-Man est plus rapide durant quelques secondes
-//            après avoir mangé une super-pac-gomme, tempsEntreActions peut varier */
-//        }
-//        grille.retirerDeLEnvironnement(this) ;
-//        setChanged(); // notification de la vue
-//        notifyObservers();
+        System.out.println("START");
+        while((j.finPartie())) {
+            System.out.println("TICK");
+            realiserAction();
+            j.newChange();
+            try {
+                sleep(tempsEntreActions); /* par exemple, Pac-Man est plus rapide durant quelques secondes
+                après avoir mangé une super-pac-gomme, tempsEntreActions peut varier */
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
+        System.out.println("END");
     }
 }

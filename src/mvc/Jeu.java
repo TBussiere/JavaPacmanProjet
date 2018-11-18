@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 
 /**
  *
@@ -26,6 +27,9 @@ public class Jeu extends Observable {
 
     public Jeu(int x, int y, int nbenemis) {
         init(x, y, nbenemis + 1);
+        Thread t = new Thread(tabEntites[0]);
+        t.setName("PacmanThread");
+        t.start();
     }
 
     public void init(int nbx, int nby, int nbent) {
@@ -33,12 +37,12 @@ public class Jeu extends Observable {
         plateau = new Case[nbx][nby];
         tabEntites = new Entite[nbent];
 
-        tabEntites[0] = new Pacman();
-        
+        tabEntites[0] = new Pacman(this);
+
         for (int i = 1; i < nbent; i++) {
             tabEntites[i] = new Ghost();
         }
-        
+
         int curNb = 0;
 
         ////PLATEAU faire le truc sur fichier externe
@@ -95,7 +99,7 @@ public class Jeu extends Observable {
 
     }
 
-    public boolean finPartie() {
+    public synchronized boolean finPartie() {
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; j++) {
                 if (plateau[i][j] instanceof Couloir) {
@@ -112,8 +116,18 @@ public class Jeu extends Observable {
         return false;
     }
 
-    public void deplacer(Entite e, Direction d) {
+    public void deplacer(Direction d) {
+        tabEntites[0].currentDirection = d;
+    }
 
+    public void newChange() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                setChanged(); // notification de la vue
+                notifyObservers();
+            }
+        });
     }
 
     public Case[][] getPlateau() {

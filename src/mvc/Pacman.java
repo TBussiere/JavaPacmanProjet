@@ -9,37 +9,81 @@ package mvc;
  *
  * @author Jean-Baptiste
  */
-
 public class Pacman extends Entite {
+
     private int score;
-    
-    public Pacman(){
+    public boolean superPacman;
+
+    public Pacman(Jeu j) {
         this.score = 0;
+        currentDirection = Direction.DROITE;
+        superPacman = false;
+        this.j = j;
     }
-    
-    public String getCurrentDirection(){
-        this.currentDirection = "";
+
+    public Direction getCurrentDirection() {
         return this.currentDirection;
     }
-    
-    @Override
-    public void realiserAction(){
 
+    @Override
+    public void realiserAction() {
+        Case c[][] = j.getPlateau();
+        int curX = -1, curY = -1;
+        int nextX, nextY;
+
+        for (int i = 0; i < c.length; i++) {
+            for (int k = 0; k < c[i].length; k++) {
+                if (c[i][k] instanceof Couloir) {
+                    if (((Couloir) c[i][k]).asPacman) {
+                        curX = i;
+                        curY = k;
+                        break;
+                    }
+                }
+            }
+            if (curX != -1) {
+                break;
+            }
+        }
+
+        switch (currentDirection) {
+            case HAUT:
+                nextX = curX - 1;
+                nextY = curY;
+                deplacement(c, curX, curY, nextX, nextY);
+                break;
+            case BAS:
+                nextX = curX + 1;
+                nextY = curY;
+                deplacement(c, curX, curY, nextX, nextY);
+                break;
+            case GAUCHE:
+                nextX = curX;
+                nextY = curY - 1;
+                deplacement(c, curX, curY, nextX, nextY);
+                break;
+            case DROITE:
+                nextX = curX;
+                nextY = curY + 1;
+                deplacement(c, curX, curY, nextX, nextY);
+                break;
+        }
     }
-    
-    public void moveUp(){
-        
-    }
-    
-    public void moveDown(){
-        
-    }
-    
-    public void moveLeft(){
-        
-    }
-    
-    public void moveRight(){
-        
+
+    private void deplacement(Case[][] c, int curX, int curY, int nextX, int nextY) {
+        synchronized (this) {
+            if (c[nextX][nextY] instanceof Couloir) {
+                ((Couloir) c[curX][curY]).asPacman = false;
+                ((Couloir) c[nextX][nextY]).asPacman = true;
+                if (((Couloir) c[nextX][nextY]).pac_Gomme) {
+                    score += 100;
+                    ((Couloir) c[nextX][nextY]).pac_Gomme = false;
+                } else if (((Couloir) c[nextX][nextY]).super_Pac_Gomme) {
+                    score += 500;
+                    ((Couloir) c[nextX][nextY]).super_Pac_Gomme = false;
+                }
+                j.newChange();
+            }
+        }
     }
 }

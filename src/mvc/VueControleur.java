@@ -135,29 +135,6 @@ public class VueControleur extends Application {
         
         Scene scene = new Scene(grid, Color.WHITESMOKE);
         
-        /*
-        // on efface affichage lors du clic
-        test.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            
-            @Override
-            public void handle(MouseEvent event) {
-                affichage.setText("");
-            }
-            
-        });
-        
-        
-        
-        // un controleur écoute le bouton "=" et déclenche l'appel du modèle
-        t.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            
-            @Override
-            public void handle(MouseEvent event) {
-                m.calc(affichage.getText());
-            }
-        });*/
-        
-        //grid.setGridLinesVisible(true);
        
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
@@ -165,15 +142,19 @@ public class VueControleur extends Application {
                 switch (t.getCode()) {
                     case UP:
                         System.out.println("UP");
+                        m.deplacer(Direction.HAUT);
                         break;
                     case DOWN:
                         System.out.println("Down");
+                        m.deplacer(Direction.BAS);
                         break;
                     case LEFT:
                         System.out.println("Left");
+                        m.deplacer(Direction.GAUCHE);
                         break;
                     case RIGHT:
-                        System.out.println("Right");                          
+                        System.out.println("Right");
+                        m.deplacer(Direction.DROITE);                        
                         break;
                 }
             }
