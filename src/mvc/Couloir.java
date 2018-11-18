@@ -19,10 +19,21 @@ public class Couloir extends Case{
     }
     
     public void spawn(Entite e){
+        if (e instanceof Ghost) {
+            asGhost = true;
+        }
+        else if (e instanceof Pacman) {
+            asPacman = true;
+        }
 
     }
     public void spawn(TypeGomme t){
-
+        if (t == TypeGomme.Petite) {
+            pac_Gomme = true;
+        }
+        else if (t == TypeGomme.Grosse) {
+            super_Pac_Gomme = true;
+        }
     }
     
 }

@@ -21,6 +21,8 @@ import javafx.scene.effect.Shadow;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -53,7 +55,7 @@ public class VueControleur extends Application {
     public void start(Stage primaryStage) {
 
         // initialisation du modèle que l'on souhaite utiliser
-        m = new Jeu();
+        m = new Jeu(21,21,4);
         
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
         GridPane grid = new GridPane();
@@ -131,6 +133,8 @@ public class VueControleur extends Application {
         m.addObserver(obs);
         obs.update(m, obs);
         
+        Scene scene = new Scene(grid, Color.WHITESMOKE);
+        
         /*
         // on efface affichage lors du clic
         test.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -155,9 +159,28 @@ public class VueControleur extends Application {
         
         //grid.setGridLinesVisible(true);
        
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent t) {
+                switch (t.getCode()) {
+                    case UP:
+                        System.out.println("UP");
+                        break;
+                    case DOWN:
+                        System.out.println("Down");
+                        break;
+                    case LEFT:
+                        System.out.println("Left");
+                        break;
+                    case RIGHT:
+                        System.out.println("Right");                          
+                        break;
+                }
+            }
+            
+        });
         
-        Scene scene = new Scene(grid, Color.WHITESMOKE);
-        
+               
         
         primaryStage.setTitle("Pacman");
         primaryStage.setScene(scene);

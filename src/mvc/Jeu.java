@@ -24,9 +24,22 @@ public class Jeu extends Observable {
     private Case[][] plateau;
     private Entite[] tabEntites;
 
-    public Jeu() {
+    public Jeu(int x, int y, int nbenemis) {
+        init(x, y, nbenemis + 1);
+    }
 
-        plateau = new Case[21][21];
+    public void init(int nbx, int nby, int nbent) {
+
+        plateau = new Case[nbx][nby];
+        tabEntites = new Entite[nbent];
+
+        tabEntites[0] = new Pacman();
+        
+        for (int i = 1; i < nbent; i++) {
+            tabEntites[i] = new Ghost();
+        }
+        
+        int curNb = 0;
 
         ////PLATEAU faire le truc sur fichier externe
         File file = new File("./src/ressources/plan.txt");
@@ -55,19 +68,19 @@ public class Jeu extends Observable {
                             break;
                         case "p":
                             plateau[i][j] = new Couloir();
-                            ((Couloir) plateau[i][j]).asPacman = true;
+                            ((Couloir) plateau[i][j]).spawn(tabEntites[0]);
                             break;
                         case "f":
                             plateau[i][j] = new Couloir();
-                            ((Couloir) plateau[i][j]).asGhost = true;
+                            ((Couloir) plateau[i][j]).spawn(tabEntites[1]);
                             break;
                         case "g":
                             plateau[i][j] = new Couloir();
-                            ((Couloir) plateau[i][j]).pac_Gomme = true;
+                            ((Couloir) plateau[i][j]).spawn(TypeGomme.Petite);
                             break;
                         case "b":
                             plateau[i][j] = new Couloir();
-                            ((Couloir) plateau[i][j]).super_Pac_Gomme = true;
+                            ((Couloir) plateau[i][j]).spawn(TypeGomme.Grosse);
                             break;
                         default:
                             plateau[i][j] = new Couloir();
@@ -80,14 +93,27 @@ public class Jeu extends Observable {
             ex.printStackTrace();
         }
 
-        ////Entitées =>4 fantome =>1 pacman
-        /*
-            tabEntites[0] = new Pacman();
-            tabEntites[1] = new Ghost();
-            tabEntites[2] = new Ghost();
-            tabEntites[3] = new Ghost();
-            tabEntites[4] = new Ghost();
-         */
+    }
+
+    public boolean finPartie() {
+        for (int i = 0; i < this.plateau.length; i++) {
+            for (int j = 0; j < this.plateau[i].length; j++) {
+                if (plateau[i][j] instanceof Couloir) {
+                    if (((Couloir) plateau[i][j]).asGhost && ((Couloir) plateau[i][j]).asPacman) {
+                        return true;
+                    } else if (((Couloir) plateau[i][j]).pac_Gomme) {
+                        return true;
+                    } else if (((Couloir) plateau[i][j]).super_Pac_Gomme) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public void deplacer(Entite e, Direction d) {
+
     }
 
     public Case[][] getPlateau() {
