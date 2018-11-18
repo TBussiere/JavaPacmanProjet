@@ -67,7 +67,7 @@ public class VueControleur extends Application {
             
             @Override
             public void update(Observable o, Object arg) {
-                
+                grid.getChildren().clear();
                 Case [][] temp = m.getPlateau();
                 for (int i = 0; i < temp.length; i++) {
                     for (int j = 0; j < temp[i].length; j++) {
