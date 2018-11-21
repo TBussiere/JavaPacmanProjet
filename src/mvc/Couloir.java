@@ -14,6 +14,8 @@ public class Couloir extends Case{
     public boolean super_Pac_Gomme;
     public boolean asGhost;
     public boolean asPacman;
+    public boolean eatableGhost = false;
+    public int idGhost = -1;
 
     public Couloir() {
     }
@@ -21,6 +23,7 @@ public class Couloir extends Case{
     public void spawn(Entite e){
         if (e instanceof Ghost) {
             asGhost = true;
+            this.idGhost = ((Ghost) e).ID;
         }
         else if (e instanceof Pacman) {
             asPacman = true;

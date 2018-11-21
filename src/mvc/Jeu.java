@@ -24,12 +24,19 @@ public class Jeu extends Observable {
 
     private Case[][] plateau;
     private Entite[] tabEntites;
+    public boolean lose;
 
     public Jeu(int x, int y, int nbenemis) {
         init(x, y, nbenemis + 1);
         Thread t = new Thread(tabEntites[0]);
         t.setName("PacmanThread");
         t.start();
+        
+        for (int i = 1; i < nbenemis+1; i++) {
+            Thread t2 = new Thread(tabEntites[i]);
+            t2.setName("GhostThreadNo" + ((Ghost)tabEntites[i]).ID);
+            t2.start();
+        }
     }
 
     public void init(int nbx, int nby, int nbent) {
@@ -40,7 +47,7 @@ public class Jeu extends Observable {
         tabEntites[0] = new Pacman(this);
 
         for (int i = 1; i < nbent; i++) {
-            tabEntites[i] = new Ghost();
+            tabEntites[i] = new Ghost(this,i,(i-1)*10000);
         }
 
         int curNb = 0;
@@ -58,7 +65,7 @@ public class Jeu extends Observable {
             text = sb.toString();
 
             String[] split = text.split(";");
-
+            int k = 1;
             for (int i = 0; i < split.length; i++) {
                 System.out.println(split[i]);
                 String[] split2 = split[i].split(",");
@@ -76,7 +83,7 @@ public class Jeu extends Observable {
                             break;
                         case "f":
                             plateau[i][j] = new Couloir();
-                            ((Couloir) plateau[i][j]).spawn(tabEntites[1]);
+                            ((Couloir) plateau[i][j]).spawn(tabEntites[k++]);
                             break;
                         case "g":
                             plateau[i][j] = new Couloir();
@@ -99,13 +106,21 @@ public class Jeu extends Observable {
 
     }
 
-    public synchronized boolean finPartie() {
+    public boolean finPartie() {
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; j++) {
                 if (plateau[i][j] instanceof Couloir) {
                     if (((Couloir) plateau[i][j]).asGhost && ((Couloir) plateau[i][j]).asPacman) {
-                        return true;
-                    } else if (((Couloir) plateau[i][j]).pac_Gomme) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < this.plateau.length; i++) {
+            for (int j = 0; j < this.plateau[i].length; j++) {
+                if (plateau[i][j] instanceof Couloir) {
+                    if (((Couloir) plateau[i][j]).pac_Gomme) {
                         return true;
                     } else if (((Couloir) plateau[i][j]).super_Pac_Gomme) {
                         return true;

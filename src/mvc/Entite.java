@@ -32,7 +32,7 @@ public abstract class Entite implements Runnable{
     public void run() {
         System.out.println("START");
         while((j.finPartie())) {
-            System.out.println("TICK");
+            //System.out.println("TICK");
             realiserAction();
             j.newChange();
             try {
