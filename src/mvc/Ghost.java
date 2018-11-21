@@ -108,52 +108,108 @@ public class Ghost extends Entite {
         int nbNA = 0;
         if (!(c[curX - 1][curY] instanceof Couloir)) {
             MapDir.put(Direction.HAUT, 0f);
-            nbNA++;
+            if (Direction.BAS == this.currentDirection) {
+                nbNA++;
+            }
+            else{
+                nbNA+=3;
+            }
         } else if (((Couloir) c[curX - 1][curY]).asGhost) {
             MapDir.put(Direction.HAUT, 0f);
-            nbNA++;
+            if (Direction.BAS == this.currentDirection) {
+                nbNA++;
+            }
+            else{
+                nbNA+=3;
+            }
         }
 
         if (!(c[curX + 1][curY] instanceof Couloir)) {
             MapDir.put(Direction.BAS, 0f);
-            nbNA++;
+            if (Direction.HAUT == this.currentDirection) {
+                nbNA++;
+            }
+            else{
+                nbNA+=3;
+            }
         } else if (((Couloir) c[curX + 1][curY]).asGhost) {
             MapDir.put(Direction.BAS, 0f);
-            nbNA++;
+            if (Direction.HAUT == this.currentDirection) {
+                nbNA++;
+            }
+            else{
+                nbNA+=3;
+            }
         }
 
         if (!(c[curX][curY - 1] instanceof Couloir)) {
             MapDir.put(Direction.GAUCHE, 0f);
-            nbNA++;
+            if (Direction.DROITE == this.currentDirection) {
+                nbNA++;
+            }
+            else{
+                nbNA+=3;
+            }
         } else if (((Couloir) c[curX][curY - 1]).asGhost) {
             MapDir.put(Direction.GAUCHE, 0f);
-            nbNA++;
+            if (Direction.DROITE == this.currentDirection) {
+                nbNA++;
+            }
+            else{
+                nbNA+=3;
+            }
         }
 
         if (!(c[curX][curY + 1] instanceof Couloir)) {
             MapDir.put(Direction.DROITE, 0f);
-            nbNA++;
+            if (Direction.GAUCHE == this.currentDirection) {
+                nbNA++;
+            }
+            else{
+                nbNA+=3;
+            }
         } else if (((Couloir) c[curX][curY + 1]).asGhost) {
             MapDir.put(Direction.DROITE, 0f);
-            nbNA++;
+            if (Direction.GAUCHE == this.currentDirection) {
+                nbNA++;
+            }
+            else{
+                nbNA+=3;
+            }
         }
 
         if (!(MapDir.containsKey(Direction.HAUT))) {
-            MapDir.put(Direction.HAUT, 1f / (4 - nbNA));
+            if (Direction.BAS == this.currentDirection) {
+                MapDir.put(Direction.HAUT, 1f / (10 - nbNA));
+            }else{
+                MapDir.put(Direction.HAUT, 3f / (10 - nbNA));
+            } 
         }
         if (!(MapDir.containsKey(Direction.BAS))) {
-            MapDir.put(Direction.BAS, 1f / (4 - nbNA));
+            if (Direction.HAUT == this.currentDirection) {
+                MapDir.put(Direction.BAS, 1f / (10 - nbNA));
+            }else{
+                MapDir.put(Direction.BAS, 3f / (10 - nbNA));
+            } 
         }
         if (!(MapDir.containsKey(Direction.GAUCHE))) {
-            MapDir.put(Direction.GAUCHE, 1f / (4 - nbNA));
+            if (Direction.DROITE == this.currentDirection) {
+                MapDir.put(Direction.GAUCHE, 1f / (10 - nbNA));
+            }else{
+                MapDir.put(Direction.GAUCHE, 3f / (10 - nbNA));
+            } 
         }
         if (!(MapDir.containsKey(Direction.DROITE))) {
-            MapDir.put(Direction.DROITE, 1f / (4 - nbNA));
+            if (Direction.GAUCHE == this.currentDirection) {
+                MapDir.put(Direction.DROITE, 1f / (10 - nbNA));
+            }else{
+                MapDir.put(Direction.DROITE, 3f / (10 - nbNA));
+            } 
         }
 
         Direction res = Direction.NOTFOUND;
         
-        int randomNumint = ThreadLocalRandom.current().nextInt(0, 100+1);  //rand.nextInt((100 - 0) + 1) + 0;
+        int randomNumint = ThreadLocalRandom.current().nextInt(1, 100+1);  //rand.nextInt((100 - 0) + 1) + 0;
         float randomNum = randomNumint/100f;
 
         for (Map.Entry<Direction, Float> entry : MapDir.entrySet()) {
