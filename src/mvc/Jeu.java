@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -24,16 +26,22 @@ public class Jeu extends Observable {
 
     private Case[][] plateau;
     private Entite[] tabEntites;
-    public boolean lose;
+    public boolean closeThreads;
+    private List<Thread> tabThread;
 
     public Jeu(int x, int y, int nbenemis) {
         init(x, y, nbenemis + 1);
+        
+        tabThread = new ArrayList<>();
+        
         Thread t = new Thread(tabEntites[0]);
+        tabThread.add(t);
         t.setName("PacmanThread");
         t.start();
         
         for (int i = 1; i < nbenemis+1; i++) {
             Thread t2 = new Thread(tabEntites[i]);
+            tabThread.add(t2);
             t2.setName("GhostThreadNo" + ((Ghost)tabEntites[i]).ID);
             t2.start();
         }
@@ -107,6 +115,9 @@ public class Jeu extends Observable {
     }
 
     public boolean finPartie() {
+        if (closeThreads) {
+            return false;
+        }
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; j++) {
                 if (plateau[i][j] instanceof Couloir) {
@@ -151,5 +162,12 @@ public class Jeu extends Observable {
 
     public Entite[] getTabEntites() {
         return tabEntites;
+    }
+
+    void stopAllThread() {
+        closeThreads = true;
+        for (int i = 0; i < this.tabEntites.length; i++) {
+            this.tabEntites[i].running = false;
+        }
     }
 }

@@ -17,6 +17,7 @@ public abstract class Entite implements Runnable{
     protected Direction currentDirection;
     protected int tempsEntreActions = 250;
     protected Jeu j;
+    protected boolean running = true;
     
     public abstract void realiserAction();
     
@@ -31,7 +32,7 @@ public abstract class Entite implements Runnable{
     @Override
     public void run() {
         System.out.println("START");
-        while((j.finPartie())) {
+        while((j.finPartie()) && running) {
             //System.out.println("TICK");
             realiserAction();
             j.newChange();

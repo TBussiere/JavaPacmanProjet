@@ -38,6 +38,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -157,6 +158,14 @@ public class VueControleur extends Application {
                         m.deplacer(Direction.DROITE);                        
                         break;
                 }
+            }
+            
+        });
+        
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            @Override
+            public void handle(WindowEvent t) {
+                m.stopAllThread();
             }
             
         });
