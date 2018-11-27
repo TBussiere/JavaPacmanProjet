@@ -5,6 +5,9 @@
  */
 package mvc;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 /**
  *
  * @author Jean-Baptiste
@@ -13,12 +16,20 @@ public class Pacman extends Entite {
 
     private int score;
     public boolean superPacman;
+    private Image img = new Image("./ressources/pacman.png");
+    public ImageView pacmanView = new ImageView(img);
 
     public Pacman(Jeu j) {
         this.score = 0;
+        this.pacmanView.setFitWidth(25);
+        this.pacmanView.setFitHeight(25);
         currentDirection = Direction.DROITE;
         superPacman = false;
         this.j = j;
+    }
+
+    public ImageView getPacmanView() {
+        return pacmanView;
     }
 
     public Direction getCurrentDirection() {

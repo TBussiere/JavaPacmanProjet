@@ -48,6 +48,7 @@ public class VueControleur extends Application {
     
     // modèle : ce qui réalise le calcule de l'expression
     Jeu m;
+    Pacman pacman = new Pacman(m);
     
     int column = 21;
     int row = 21;
@@ -83,12 +84,7 @@ public class VueControleur extends Application {
                             if (c.asPacman) {
                                 r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
-                                
-                                Image img = new Image("./ressources/pacman.png");
-                                ImageView imageView = new ImageView(img);
-                                imageView.setFitWidth(25);
-                                imageView.setFitHeight(25);
-                                grid.add(imageView,i,j);
+                                grid.add(pacman.getPacmanView(),i,j);
                             }
                             else if (c.asGhost) {
                                 r.setFill(Color.BLACK);
@@ -144,18 +140,22 @@ public class VueControleur extends Application {
                     case UP:
                         System.out.println("UP");
                         m.deplacer(Direction.HAUT);
+                        pacman.getPacmanView().setRotate(270);
                         break;
                     case DOWN:
                         System.out.println("Down");
                         m.deplacer(Direction.BAS);
+                        pacman.getPacmanView().setRotate(90);
                         break;
                     case LEFT:
                         System.out.println("Left");
                         m.deplacer(Direction.GAUCHE);
+                        pacman.getPacmanView().setRotate(180);
                         break;
                     case RIGHT:
                         System.out.println("Right");
-                        m.deplacer(Direction.DROITE);                        
+                        m.deplacer(Direction.DROITE);
+                        pacman.getPacmanView().setRotate(360);
                         break;
                 }
             }
