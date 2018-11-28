@@ -16,7 +16,7 @@ public class Pacman extends Entite {
 
     private int score;
     public boolean superPacman;
-    private Image img = new Image("./ressources/pacman.png");
+    private Image img = new Image("./ressources/pacman.gif");
     public ImageView pacmanView = new ImageView(img);
 
     public Pacman(Jeu j) {
