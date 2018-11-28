@@ -27,6 +27,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
@@ -36,7 +37,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.WindowEvent;
 
@@ -48,6 +49,7 @@ public class VueControleur extends Application {
     
     // modèle : ce qui réalise le calcule de l'expression
     Jeu m;
+    Text txt = new Text();
     ImageView pacmanView = new ImageView(new Image("./ressources/pacman.gif"));
     
     int column = 21;
@@ -55,12 +57,15 @@ public class VueControleur extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
+        
         // initialisation du modèle que l'on souhaite utiliser
         m = new Jeu(21,21,4);
         
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
-        GridPane grid = new GridPane();        
+        GridPane grid = new GridPane();
+        FlowPane MainPane = new FlowPane();        
+        MainPane.getChildren().add(grid);
+        
         
         Observer obs = new Observer() {
             
@@ -136,14 +141,19 @@ public class VueControleur extends Application {
                     }
                 }
                 
+                txt.setText("Score :" + ((Pacman)m.getTabEntites()[0]).score);
             }
         };
         
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
         m.addObserver(obs);
         obs.update(m, obs);
+        txt.setText("Score : 0");
+        txt.setFont(new Font(20));
+        txt.setFill(Color.WHITE);
+        MainPane.getChildren().add(txt);
         
-        Scene scene = new Scene(grid, Color.WHITESMOKE);
+        Scene scene = new Scene(MainPane, Color.BLACK);
         
        
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
