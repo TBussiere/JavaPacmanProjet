@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import javafx.scene.paint.Color;
 import java.util.concurrent.ThreadLocalRandom;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -27,7 +29,6 @@ public class Ghost extends Entite {
 
     public Ghost(Jeu j, int id, int popIn) {
         this.j = j;
-        this.color = Color.RED;
         this.ID = id;
         this.popIn = popIn;
     }

@@ -52,7 +52,7 @@ public class VueControleur extends Application {
     
     int column = 21;
     int row = 21;
-    
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -60,10 +60,7 @@ public class VueControleur extends Application {
         m = new Jeu(21,21,4);
         
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
-        GridPane grid = new GridPane();
-        
-        
-        
+        GridPane grid = new GridPane();        
         
         Observer obs = new Observer() {
             
@@ -89,12 +86,22 @@ public class VueControleur extends Application {
                             else if (c.asGhost) {
                                 r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
-                                
-                                Image img = new Image("./ressources/ghost_red.png");
-                                ImageView imageView = new ImageView(img);
-                                imageView.setFitWidth(25);
-                                imageView.setFitHeight(25);
-                                grid.add(imageView,i,j);
+                                ImageView ghostView = new ImageView();
+                                ghostView.setFitWidth(25);
+                                ghostView.setFitHeight(25);
+                                if(c.idGhost == 1){
+                                    ghostView.setImage(new Image("./ressources/ghost_red.png"));
+                                }
+                                if(c.idGhost == 2){
+                                    ghostView.setImage(new Image("./ressources/ghost_yellow.png"));
+                                }
+                                if(c.idGhost == 3){
+                                    ghostView.setImage(new Image("./ressources/ghost_pink.png"));
+                                }
+                                if(c.idGhost == 4){
+                                    ghostView.setImage(new Image("./ressources/ghost_blue.png"));
+                                }
+                                grid.add(ghostView,i,j);
                             }
                             else if (c.pac_Gomme) {
                                 r.setFill(Color.BLACK);
