@@ -7,7 +7,7 @@ c,m,g,g,g,g,m,g,g,g,m,g,g,g,m,g,g,g,g,m,c;
 c,m,m,m,m,g,m,m,m,c,m,c,m,m,m,g,m,m,m,m,c;
 c,c,c,c,m,g,m,c,c,c,f,c,c,c,m,g,m,c,c,c,c;
 m,m,m,m,m,g,m,c,m,m,m,m,m,c,m,g,m,m,m,m,m;
-c,c,c,c,c,g,c,c,m,f,f,f,m,c,c,g,c,c,c,c,c;
+w,c,c,c,c,g,c,c,m,f,f,f,m,c,c,g,c,c,c,c,w;
 m,m,m,m,m,g,m,c,m,m,m,m,m,c,m,g,m,m,m,m,m;
 c,c,c,c,m,g,m,c,c,c,c,c,c,c,m,g,m,c,c,c,c;
 c,m,m,m,m,g,m,c,m,m,m,m,m,c,m,g,m,m,m,m,c;

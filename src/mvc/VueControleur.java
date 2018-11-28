@@ -130,6 +130,10 @@ public class VueControleur extends Application {
                                 grid.add(r,i,j);
                             }
                         }
+                        else if (temp[j][i] instanceof WrapAround) {
+                            r.setFill(Color.GREY);
+                            grid.add(r,i,j);
+                        }
                     }
                 }
                 

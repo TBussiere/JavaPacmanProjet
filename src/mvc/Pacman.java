@@ -15,7 +15,6 @@ public class Pacman extends Entite {
     public boolean superPacman;
     public int curDurationSuperPacmen;
     public int baseDurationSuperPacmen = 200;
-    public Direction currentDirection;
     
     
 
