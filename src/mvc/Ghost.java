@@ -95,6 +95,7 @@ public class Ghost extends Entite {
     private void deplacement(Case[][] c, int curX, int curY, int nextX, int nextY) {
         synchronized (this) {
             ((Couloir) c[curX][curY]).asGhost = false;
+            ((Couloir) c[curX][curY]).eatableGhost = false;
             ((Couloir) c[curX][curY]).idGhost = -1;
             ((Couloir) c[nextX][nextY]).asGhost = true;
             ((Couloir) c[nextX][nextY]).idGhost = this.ID;
@@ -102,6 +103,9 @@ public class Ghost extends Entite {
                 if (((Pacman)j.getTabEntites()[0]).superPacman) {
                     j.entityGetEated(this.ID, nextX, nextY);
                 }
+            }
+            if (this.eatable) {
+                ((Couloir) c[nextX][nextY]).eatableGhost = true;
             }
         }
     }

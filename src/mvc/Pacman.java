@@ -121,6 +121,10 @@ public class Pacman extends Entite {
                     j.entityGetEated(((Couloir) c[nextX][nextY]).idGhost, nextX, nextY);
                 }
             }
+            /*else if(c[nextX][nextY] instanceof WrapAround){
+                
+            }*/
+            
         }
     }
 }
