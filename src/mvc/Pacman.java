@@ -14,7 +14,7 @@ public class Pacman extends Entite {
     public int score;
     public boolean superPacman;
     public int curDurationSuperPacmen;
-    public int baseDurationSuperPacmen = 200;
+    public int baseDurationSuperPacmen = 80;
     
     
 
