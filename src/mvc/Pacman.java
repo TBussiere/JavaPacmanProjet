@@ -14,7 +14,7 @@ public class Pacman extends Entite {
     public int score;
     public boolean superPacman;
     public int curDurationSuperPacmen;
-    public int baseDurationSuperPacmen = 200;
+    public int baseDurationSuperPacmen = 10;
     
     
 
@@ -84,12 +84,11 @@ public class Pacman extends Entite {
                 }
             }
             this.curDurationSuperPacmen -= 1;
-        }
-        else if (this.superPacman) {
-            this.curDurationSuperPacmen -= 1;
+            System.out.println(curDurationSuperPacmen);
         }
         else if (this.superPacman && this.curDurationSuperPacmen<=0) {
             this.superPacman = false;
+            System.out.println(curDurationSuperPacmen);
             
             for (int i = 0; i < c.length; i++) {
                 for (int k = 0; k < c[i].length; k++) {
@@ -100,6 +99,9 @@ public class Pacman extends Entite {
                     }
                 }
             }
+        }else if (this.superPacman) {
+            this.curDurationSuperPacmen -= 1;
+            System.out.println(curDurationSuperPacmen);
         }
     }
 
@@ -121,9 +123,10 @@ public class Pacman extends Entite {
                     j.entityGetEated(((Couloir) c[nextX][nextY]).idGhost, nextX, nextY);
                 }
             }
-            /*else if(c[nextX][nextY] instanceof WrapAround){
-                
-            }*/
+            else if(c[nextX][nextY] instanceof WrapAround){
+                ((Couloir) c[curX][curY]).asPacman = false;
+                ((Couloir) c[nextX][nextY]).asPacman = true;
+            }
             
         }
     }
