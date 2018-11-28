@@ -13,6 +13,11 @@ public class Pacman extends Entite {
 
     public int score;
     public boolean superPacman;
+    public int curDurationSuperPacmen;
+    public int baseDurationSuperPacmen = 200;
+    public Direction currentDirection;
+    
+    
 
     public Pacman(Jeu j) {
         this.score = 0;
