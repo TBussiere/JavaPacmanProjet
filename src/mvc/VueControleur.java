@@ -48,7 +48,7 @@ public class VueControleur extends Application {
     
     // modèle : ce qui réalise le calcule de l'expression
     Jeu m;
-    Pacman pacman = new Pacman(m);
+    ImageView pacmanView = new ImageView(new Image("./ressources/pacman.gif"));
     
     int column = 21;
     int row = 21;
@@ -81,7 +81,9 @@ public class VueControleur extends Application {
                             if (c.asPacman) {
                                 r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
-                                grid.add(pacman.getPacmanView(),i,j);
+                                pacmanView.setFitWidth(25);
+                                pacmanView.setFitHeight(25);
+                                grid.add(pacmanView,i,j);
                             }
                             else if (c.asGhost) {
                                 r.setFill(Color.BLACK);
@@ -147,26 +149,26 @@ public class VueControleur extends Application {
                     case UP:
                         System.out.println("UP");
                         m.deplacer(Direction.HAUT);
-                        pacman.getPacmanView().setScaleY(1.0);
-                        pacman.getPacmanView().setRotate(270);
+                        pacmanView.setScaleY(1.0);
+                        pacmanView.setRotate(270);
                         break;
                     case DOWN:
                         System.out.println("Down");
                         m.deplacer(Direction.BAS);
-                        pacman.getPacmanView().setScaleY(1.0);
-                        pacman.getPacmanView().setRotate(90);
+                        pacmanView.setScaleY(1.0);
+                        pacmanView.setRotate(90);
                         break;
                     case LEFT:
                         System.out.println("Left");
                         m.deplacer(Direction.GAUCHE);
-                        pacman.getPacmanView().setScaleY(-1.0);
-                        pacman.getPacmanView().setRotate(180);
+                        pacmanView.setScaleY(-1.0);
+                        pacmanView.setRotate(180);
                         break;
                     case RIGHT:
                         System.out.println("Right");
                         m.deplacer(Direction.DROITE);
-                        pacman.getPacmanView().setScaleY(1.0);
-                        pacman.getPacmanView().setRotate(360);
+                        pacmanView.setScaleY(1.0);
+                        pacmanView.setRotate(360);
                         break;
                 }
             }
