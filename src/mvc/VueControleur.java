@@ -48,11 +48,11 @@ public class VueControleur extends Application {
     
     // modèle : ce qui réalise le calcule de l'expression
     Jeu m;
-    Pacman pacman = new Pacman(m);
+    ImageView pacmanView = new ImageView(new Image("./ressources/pacman.gif"));
     
     int column = 21;
     int row = 21;
-    
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -60,10 +60,7 @@ public class VueControleur extends Application {
         m = new Jeu(21,21,4);
         
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
-        GridPane grid = new GridPane();
-        
-        
-        
+        GridPane grid = new GridPane();        
         
         Observer obs = new Observer() {
             
@@ -84,17 +81,29 @@ public class VueControleur extends Application {
                             if (c.asPacman) {
                                 r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
-                                grid.add(pacman.getPacmanView(),i,j);
+                                pacmanView.setFitWidth(25);
+                                pacmanView.setFitHeight(25);
+                                grid.add(pacmanView,i,j);
                             }
                             else if (c.asGhost) {
                                 r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
-                                
-                                Image img = new Image("./ressources/ghost_red.png");
-                                ImageView imageView = new ImageView(img);
-                                imageView.setFitWidth(25);
-                                imageView.setFitHeight(25);
-                                grid.add(imageView,i,j);
+                                ImageView ghostView = new ImageView();
+                                ghostView.setFitWidth(25);
+                                ghostView.setFitHeight(25);
+                                if(c.idGhost == 1){
+                                    ghostView.setImage(new Image("./ressources/ghost_red.png"));
+                                }
+                                if(c.idGhost == 2){
+                                    ghostView.setImage(new Image("./ressources/ghost_yellow.png"));
+                                }
+                                if(c.idGhost == 3){
+                                    ghostView.setImage(new Image("./ressources/ghost_pink.png"));
+                                }
+                                if(c.idGhost == 4){
+                                    ghostView.setImage(new Image("./ressources/ghost_blue.png"));
+                                }
+                                grid.add(ghostView,i,j);
                             }
                             else if (c.pac_Gomme) {
                                 r.setFill(Color.BLACK);
@@ -141,26 +150,26 @@ public class VueControleur extends Application {
                     case UP:
                         //System.out.println("UP");
                         m.deplacer(Direction.HAUT);
-                        pacman.getPacmanView().setScaleY(1.0);
-                        pacman.getPacmanView().setRotate(270);
+                        pacmanView.setScaleY(1.0);
+                        pacmanView.setRotate(270);
                         break;
                     case DOWN:
                         //System.out.println("Down");
                         m.deplacer(Direction.BAS);
-                        pacman.getPacmanView().setScaleY(1.0);
-                        pacman.getPacmanView().setRotate(90);
+                        pacmanView.setScaleY(1.0);
+                        pacmanView.setRotate(90);
                         break;
                     case LEFT:
                         //System.out.println("Left");
                         m.deplacer(Direction.GAUCHE);
-                        pacman.getPacmanView().setScaleY(-1.0);
-                        pacman.getPacmanView().setRotate(180);
+                        pacmanView.setScaleY(-1.0);
+                        pacmanView.setRotate(180);
                         break;
                     case RIGHT:
                         //System.out.println("Right");
                         m.deplacer(Direction.DROITE);
-                        pacman.getPacmanView().setScaleY(1.0);
-                        pacman.getPacmanView().setRotate(360);
+                        pacmanView.setScaleY(1.0);
+                        pacmanView.setRotate(360);
                         break;
                 }
             }
