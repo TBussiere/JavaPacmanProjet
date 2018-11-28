@@ -28,7 +28,9 @@ public class Jeu extends Observable {
     private Entite[] tabEntites;
     public boolean closeThreads;
     private List<Thread> tabThread;
-
+    private int repopx = 10;
+    private int repopy = 9;
+    private int repopTime = 5000;
     public Jeu(int x, int y, int nbenemis) {
         init(x, y, nbenemis + 1);
         
@@ -43,6 +45,7 @@ public class Jeu extends Observable {
             Thread t2 = new Thread(tabEntites[i]);
             tabThread.add(t2);
             t2.setName("GhostThreadNo" + ((Ghost)tabEntites[i]).ID);
+            ((Ghost)tabEntites[i]).threadName = "GhostThreadNo" + ((Ghost)tabEntites[i]).ID;
             t2.start();
         }
     }
@@ -55,7 +58,7 @@ public class Jeu extends Observable {
         tabEntites[0] = new Pacman(this);
 
         for (int i = 1; i < nbent; i++) {
-            tabEntites[i] = new Ghost(this,i,(i-1)*10000);
+            tabEntites[i] = new Ghost(this,i,(i-1)*5000);
         }
 
         int curNb = 0;
@@ -121,8 +124,13 @@ public class Jeu extends Observable {
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; j++) {
                 if (plateau[i][j] instanceof Couloir) {
-                    if (((Couloir) plateau[i][j]).asGhost && ((Couloir) plateau[i][j]).asPacman) {
-                        return false;
+                    if (((Pacman)this.tabEntites[0]).superPacman == false) {
+                        if (((Couloir) plateau[i][j]).asGhost && ((Couloir) plateau[i][j]).asPacman) {
+                            System.out.println("PROK GAME OVER");
+                            return false;
+                        }
+                    }else{
+                        return true;
                     }
                 }
             }
@@ -169,5 +177,16 @@ public class Jeu extends Observable {
         for (int i = 0; i < this.tabEntites.length; i++) {
             this.tabEntites[i].running = false;
         }
+    }
+
+    public void entityGetEated(int idGhost, int x, int y) {
+        this.tabEntites[idGhost].running = false;
+        ((Couloir)this.plateau[x][y]).asGhost = false;
+        ((Couloir)this.plateau[x][y]).idGhost = -1;
+        
+        ((Pacman)this.tabEntites[0]).score += 5000;    
+        //((Couloir)this.plateau[repopx][repopy]).asGhost = true;
+        //((Couloir)this.plateau[repopx][repopy]).idGhost = idGhost;
+        
     }
 }

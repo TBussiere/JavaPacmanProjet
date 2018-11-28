@@ -6,11 +6,8 @@
 package mvc;
 
 import static java.lang.Thread.sleep;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import javafx.scene.paint.Color;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -20,21 +17,22 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Ghost extends Entite {
     public static int Xpop = 7;
     public static int Ypop = 10;
-    private Color color;
+    //private Color color;
     protected int ID;
     private boolean pop = false;
     private int popIn;
+    public boolean eatable = false;
 
     public Ghost(Jeu j, int id, int popIn) {
         this.j = j;
-        this.color = Color.RED;
+        //this.color = Color.RED;
         this.ID = id;
         this.popIn = popIn;
     }
 
     @Override
     public void realiserAction() {
-        System.out.println("ID :" + this.ID);
+        //System.out.println("ID :" + this.ID);
         try {
             sleep(popIn);
         } catch (InterruptedException ex) {
@@ -99,6 +97,11 @@ public class Ghost extends Entite {
             ((Couloir) c[curX][curY]).idGhost = -1;
             ((Couloir) c[nextX][nextY]).asGhost = true;
             ((Couloir) c[nextX][nextY]).idGhost = this.ID;
+            if (((Couloir) c[nextX][nextY]).asPacman) {
+                if (((Pacman)j.getTabEntites()[0]).superPacman) {
+                    j.entityGetEated(this.ID, nextX, nextY);
+                }
+            }
         }
     }
 

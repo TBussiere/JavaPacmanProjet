@@ -18,6 +18,7 @@ public abstract class Entite implements Runnable{
     protected int tempsEntreActions = 250;
     protected Jeu j;
     protected boolean running = true;
+    public String threadName = "";
     
     public abstract void realiserAction();
     
@@ -43,6 +44,16 @@ public abstract class Entite implements Runnable{
                 ex.printStackTrace();
             }
         }
-        System.out.println("END");
+        if (!j.finPartie()) {
+            System.out.println("GAME OVER");
+        }
+        else if (!running) {
+            System.out.println("END");
+        }
+        
+        if (this instanceof Pacman) {
+            System.out.println("Score : " + ((Pacman)this).score);
+        }
+        
     }
 }

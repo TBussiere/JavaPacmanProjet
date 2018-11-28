@@ -123,6 +123,7 @@ public class VueControleur extends Application {
                         }
                     }
                 }
+                
             }
         };
         
@@ -138,25 +139,25 @@ public class VueControleur extends Application {
             public void handle(KeyEvent t) {
                 switch (t.getCode()) {
                     case UP:
-                        System.out.println("UP");
+                        //System.out.println("UP");
                         m.deplacer(Direction.HAUT);
                         pacman.getPacmanView().setScaleY(1.0);
                         pacman.getPacmanView().setRotate(270);
                         break;
                     case DOWN:
-                        System.out.println("Down");
+                        //System.out.println("Down");
                         m.deplacer(Direction.BAS);
                         pacman.getPacmanView().setScaleY(1.0);
                         pacman.getPacmanView().setRotate(90);
                         break;
                     case LEFT:
-                        System.out.println("Left");
+                        //System.out.println("Left");
                         m.deplacer(Direction.GAUCHE);
                         pacman.getPacmanView().setScaleY(-1.0);
                         pacman.getPacmanView().setRotate(180);
                         break;
                     case RIGHT:
-                        System.out.println("Right");
+                        //System.out.println("Right");
                         m.deplacer(Direction.DROITE);
                         pacman.getPacmanView().setScaleY(1.0);
                         pacman.getPacmanView().setRotate(360);

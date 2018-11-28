@@ -14,10 +14,12 @@ import javafx.scene.image.ImageView;
  */
 public class Pacman extends Entite {
 
-    private int score;
+    public int score;
     public boolean superPacman;
     private Image img = new Image("./ressources/pacman.png");
     public ImageView pacmanView = new ImageView(img);
+    public int baseDurationSuperPacmen = 1000;
+    public int curDurationSuperPacmen;
 
     public Pacman(Jeu j) {
         this.score = 0;
@@ -40,7 +42,7 @@ public class Pacman extends Entite {
     public void realiserAction() {
         Case c[][] = j.getPlateau();
         int curX = -1, curY = -1;
-        int nextX, nextY;
+        int nextX = -1, nextY = -1;
 
         for (int i = 0; i < c.length; i++) {
             for (int k = 0; k < c[i].length; k++) {
@@ -79,6 +81,35 @@ public class Pacman extends Entite {
                 deplacement(c, curX, curY, nextX, nextY);
                 break;
         }
+        
+        if (this.superPacman && this.curDurationSuperPacmen == this.baseDurationSuperPacmen) {
+            for (int i = 0; i < c.length; i++) {
+                for (int k = 0; k < c[i].length; k++) {
+                    if (c[i][k] instanceof Couloir) {
+                        if (((Couloir)c[i][k]).asGhost) {
+                            ((Ghost)j.getTabEntites()[((Couloir)c[i][k]).idGhost]).eatable = true;
+                        }
+                    }
+                }
+            }
+            this.curDurationSuperPacmen -= 1;
+        }
+        else if (this.superPacman) {
+            this.curDurationSuperPacmen -= 1;
+        }
+        else if (this.superPacman && this.curDurationSuperPacmen<=0) {
+            this.superPacman = false;
+            
+            for (int i = 0; i < c.length; i++) {
+                for (int k = 0; k < c[i].length; k++) {
+                    if (c[i][k] instanceof Couloir) {
+                        if (((Couloir)c[i][k]).asGhost) {
+                            ((Ghost)j.getTabEntites()[((Couloir)c[i][k]).idGhost]).eatable = false;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void deplacement(Case[][] c, int curX, int curY, int nextX, int nextY) {
@@ -91,7 +122,12 @@ public class Pacman extends Entite {
                     ((Couloir) c[nextX][nextY]).pac_Gomme = false;
                 } else if (((Couloir) c[nextX][nextY]).super_Pac_Gomme) {
                     score += 500;
+                    superPacman = true;
+                    curDurationSuperPacmen = baseDurationSuperPacmen;
                     ((Couloir) c[nextX][nextY]).super_Pac_Gomme = false;
+                }
+                else if (((Couloir) c[nextX][nextY]).asGhost && this.superPacman) {
+                    j.entityGetEated(((Couloir) c[nextX][nextY]).idGhost, nextX, nextY);
                 }
             }
         }
