@@ -104,9 +104,6 @@ public class Jeu extends Observable {
                             plateau[i][j] = new Couloir();
                             ((Couloir) plateau[i][j]).spawn(TypeGomme.Grosse);
                             break;
-                        case "w":
-                            plateau[i][j] = new WrapAround();
-                            break;
                         default:
                             plateau[i][j] = new Couloir();
                             break;

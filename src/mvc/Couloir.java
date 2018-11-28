@@ -16,9 +16,6 @@ public class Couloir extends Case{
     public boolean asPacman;
     public boolean eatableGhost = false;
     public int idGhost = -1;
-
-    public Couloir() {
-    }
     
     public void spawn(Entite e){
         if (e instanceof Ghost) {

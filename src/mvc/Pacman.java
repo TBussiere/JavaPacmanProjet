@@ -107,6 +107,21 @@ public class Pacman extends Entite {
 
     private void deplacement(Case[][] c, int curX, int curY, int nextX, int nextY) {
         synchronized (this) {
+            if (nextX == c.length) {
+                nextX = 0;
+            }
+            if (nextX == -1) {
+                nextX = c.length-1;
+            }
+            
+            if (nextY == c[0].length) {
+                nextY = 0;
+            }
+            if (nextY == -1) {
+                nextY = c[0].length-1;
+            }
+            
+            
             if (c[nextX][nextY] instanceof Couloir) {
                 ((Couloir) c[curX][curY]).asPacman = false;
                 ((Couloir) c[nextX][nextY]).asPacman = true;
@@ -123,11 +138,6 @@ public class Pacman extends Entite {
                     j.entityGetEated(((Couloir) c[nextX][nextY]).idGhost, nextX, nextY);
                 }
             }
-            else if(c[nextX][nextY] instanceof WrapAround){
-                ((Couloir) c[curX][curY]).asPacman = false;
-                ((Couloir) c[nextX][nextY]).asPacman = true;
-            }
-            
         }
     }
 }

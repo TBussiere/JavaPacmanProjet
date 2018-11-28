@@ -91,7 +91,6 @@ public class VueControleur extends Application {
                                 ImageView ghostView = new ImageView();
                                 ghostView.setFitWidth(25);
                                 ghostView.setFitHeight(25);
-                                System.out.println("eatable" + c.eatableGhost);
                                 if(c.idGhost == 1 && c.eatableGhost == false){
                                     ghostView.setImage(new Image("./ressources/ghost_red.png"));
                                 }
@@ -133,10 +132,6 @@ public class VueControleur extends Application {
                                 r.setFill(Color.BLACK);
                                 grid.add(r,i,j);
                             }
-                        }
-                        else if (temp[j][i] instanceof WrapAround) {
-                            r.setFill(Color.GREY);
-                            grid.add(r,i,j);
                         }
                     }
                 }
