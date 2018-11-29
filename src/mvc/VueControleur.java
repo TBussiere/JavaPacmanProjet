@@ -108,20 +108,21 @@ public class VueControleur extends Application {
                                 ImageView ghostView = new ImageView();
                                 ghostView.setFitWidth(25);
                                 ghostView.setFitHeight(25);
-                                if(c.idGhost == 1 && c.eatableGhost == false){
-                                    ghostView.setImage(new Image("./ressources/ghost_red.png"));
-                                }
-                                if(c.idGhost == 2 && c.eatableGhost == false){
-                                    ghostView.setImage(new Image("./ressources/ghost_yellow.png"));
-                                }
-                                if(c.idGhost == 3 && c.eatableGhost == false){
-                                    ghostView.setImage(new Image("./ressources/ghost_pink.png"));
-                                }
-                                if(c.idGhost == 4 && c.eatableGhost == false){
-                                    ghostView.setImage(new Image("./ressources/ghost_blue.png"));
-                                }
                                 if(c.eatableGhost == true){
                                     ghostView.setImage(new Image("./ressources/ghost_eatable.png"));
+                                }else{
+                                    if(c.idGhost == 1){
+                                        ghostView.setImage(new Image("./ressources/ghost_red.png"));
+                                    }
+                                    if(c.idGhost == 2){
+                                        ghostView.setImage(new Image("./ressources/ghost_yellow.png"));
+                                    }
+                                    if(c.idGhost == 3){
+                                        ghostView.setImage(new Image("./ressources/ghost_pink.png"));
+                                    }
+                                    if(c.idGhost == 4){
+                                        ghostView.setImage(new Image("./ressources/ghost_blue.png"));
+                                    }
                                 }
                                 grid.add(ghostView,i,j);
                             }
