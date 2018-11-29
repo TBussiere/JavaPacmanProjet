@@ -56,6 +56,7 @@ public class VueControleur extends Application {
     
     Pane MainPane = new Pane();
     Button play = new Button();
+    Text EndResultTxt = new Text();
     
     int column = 21;
     int row = 21;
@@ -70,6 +71,7 @@ public class VueControleur extends Application {
         GridPane grid = new GridPane();
         FlowPane MainGamePane = new FlowPane();        
         MainGamePane.getChildren().add(grid);
+        
         
         for (int i = 0; i < column; i++) {
             for (int j = 0; j < row; j++) {
@@ -155,6 +157,11 @@ public class VueControleur extends Application {
                 }
                 
                 txt.setText("Score :" + ((Pacman)m.getTabEntites()[0]).score);
+                
+                if (!m.finPartie()) {
+                    EndResultTxt.setText("GAME OVER");
+                    EndResultTxt.setVisible(true);
+                }
             }
         };
         
@@ -166,11 +173,20 @@ public class VueControleur extends Application {
         txt.setFill(Color.WHITE);
         MainGamePane.getChildren().add(txt);
         MainGamePane.getStyleClass().add("bg-black-style");
+        EndResultTxt.setTranslateX(203);
+        EndResultTxt.setTranslateY(330);
+        EndResultTxt.setTextAlignment(TextAlignment.CENTER);
+        EndResultTxt.setText("");
+        EndResultTxt.setFont(new Font(40));
+        EndResultTxt.setFill(Color.WHITE);
+        EndResultTxt.setStroke(Color.YELLOW);
+        EndResultTxt.setStrokeWidth(1);
+        EndResultTxt.setVisible(false);
         
         BorderPane mainMenu = new BorderPane();
         play.setText("Jouer !");
         play.setMinHeight(30);
-        play.setMinWidth(100);//prefWidth(100);
+        play.setMinWidth(100);
         mainMenu.setCenter(play);
         //mainMenu.setTranslateX(265);
         //mainMenu.setTranslateY(300);
@@ -183,7 +199,9 @@ public class VueControleur extends Application {
 
         MainPane.prefHeight(630);
         MainPane.prefWidth(630);
-        MainPane.getChildren().addAll(MainGamePane,mainMenu);
+        MainPane.getChildren().addAll(MainGamePane,mainMenu,EndResultTxt);
+        MainPane.setMaxHeight(655);
+        MainPane.setMaxWidth(630);
         
         Scene scene = new Scene(MainPane, Color.BLACK);
         scene.getStylesheets().add("ressources/css-file.css");
