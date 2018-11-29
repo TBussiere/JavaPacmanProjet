@@ -23,7 +23,10 @@ import javafx.application.Platform;
  * @author Lewho
  */
 public class Jeu extends Observable {
-
+    public int x;
+    public int y;
+    public int nbenemis;
+    
     private Case[][] plateau;
     private Entite[] tabEntites;
     public boolean closeThreads;
@@ -32,26 +35,14 @@ public class Jeu extends Observable {
     private int repopy = 9;
     private int repopTime = 5000;
     public Jeu(int x, int y, int nbenemis) {
-        init(x, y, nbenemis + 1);
-        
-        tabThread = new ArrayList<>();
-        
-        Thread t = new Thread(tabEntites[0]);
-        tabThread.add(t);
-        t.setName("PacmanThread");
-        t.start();
-        
-        for (int i = 1; i < nbenemis+1; i++) {
-            Thread t2 = new Thread(tabEntites[i]);
-            tabThread.add(t2);
-            t2.setName("GhostThreadNo" + ((Ghost)tabEntites[i]).ID);
-            ((Ghost)tabEntites[i]).threadName = "GhostThreadNo" + ((Ghost)tabEntites[i]).ID;
-            t2.start();
-        }
+        this.x = x;
+        this.y = y;
+        this.nbenemis = nbenemis;
     }
 
     public void init(int nbx, int nby, int nbent) {
-
+        nbent +=1;
+        
         plateau = new Case[nbx][nby];
         tabEntites = new Entite[nbent];
 
@@ -113,6 +104,24 @@ public class Jeu extends Observable {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+        
+        
+        
+                
+        tabThread = new ArrayList<>();
+        
+        Thread t = new Thread(tabEntites[0]);
+        tabThread.add(t);
+        t.setName("PacmanThread");
+        t.start();
+        
+        for (int i = 1; i < nbenemis+1; i++) {
+            Thread t2 = new Thread(tabEntites[i]);
+            tabThread.add(t2);
+            t2.setName("GhostThreadNo" + ((Ghost)tabEntites[i]).ID);
+            ((Ghost)tabEntites[i]).threadName = "GhostThreadNo" + ((Ghost)tabEntites[i]).ID;
+            t2.start();
         }
 
     }

@@ -25,10 +25,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -52,6 +54,9 @@ public class VueControleur extends Application {
     Text txt = new Text();
     ImageView pacmanView = new ImageView(new Image("./ressources/pacman.gif"));
     
+    Pane MainPane = new Pane();
+    Button play = new Button();
+    
     int column = 21;
     int row = 21;
 
@@ -59,13 +64,20 @@ public class VueControleur extends Application {
     public void start(Stage primaryStage) {
         
         // initialisation du modèle que l'on souhaite utiliser
-        m = new Jeu(21,21,4);
+        m = new Jeu(column,row,4);
         
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
         GridPane grid = new GridPane();
-        FlowPane MainPane = new FlowPane();        
-        MainPane.getChildren().add(grid);
+        FlowPane MainGamePane = new FlowPane();        
+        MainGamePane.getChildren().add(grid);
         
+        for (int i = 0; i < column; i++) {
+            for (int j = 0; j < row; j++) {
+                Rectangle rec = new Rectangle(30,30);
+                rec.setFill(Color.BLACK);
+                grid.add(rec, i, j);
+            }
+        }
         
         Observer obs = new Observer() {
             
@@ -147,14 +159,33 @@ public class VueControleur extends Application {
         
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
         m.addObserver(obs);
-        obs.update(m, obs);
-        txt.setText("Score : 0");
+        //obs.update(m, obs);
+        txt.setText(".");
         txt.setFont(new Font(20));
         txt.setFill(Color.WHITE);
-        MainPane.getChildren().add(txt);
+        MainGamePane.getChildren().add(txt);
+        MainGamePane.getStyleClass().add("bg-black-style");
+        
+        BorderPane mainMenu = new BorderPane();
+        play.setText("Jouer !");
+        play.setMinHeight(30);
+        play.setMinWidth(100);//prefWidth(100);
+        mainMenu.setCenter(play);
+        //mainMenu.setTranslateX(265);
+        //mainMenu.setTranslateY(300);
+        Image logoPacman = new Image("./ressources/pacman_logo.jpg");
+        ImageView IvLogo = new ImageView(logoPacman);
+        IvLogo.setFitWidth(630);
+        IvLogo.setPreserveRatio(true);
+        IvLogo.fitWidthProperty();
+        mainMenu.setTop(IvLogo);
+
+        MainPane.prefHeight(630);
+        MainPane.prefWidth(630);
+        MainPane.getChildren().addAll(MainGamePane,mainMenu);
         
         Scene scene = new Scene(MainPane, Color.BLACK);
-        
+        scene.getStylesheets().add("ressources/css-file.css");
        
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
@@ -192,9 +223,22 @@ public class VueControleur extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
             @Override
             public void handle(WindowEvent t) {
-                m.stopAllThread();
+                try{
+                    m.stopAllThread();
+                }
+                catch(Exception ex){
+                }
             }
             
+        });
+        
+        play.setOnMousePressed(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent t) {
+                m.init(m.x, m.y, m.nbenemis);
+                mainMenu.setVisible(false);
+                
+            }
         });
         
                
