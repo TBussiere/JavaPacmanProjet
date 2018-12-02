@@ -248,22 +248,76 @@ public class Ghost extends Entite {
     
     
     private Direction IAaStar(int curX, int curY){
+
         BFS findPosToGo = new BFS(j,ID);
         
         Position[] path  = findPosToGo.getPath();
         Position nextPos = path[path.length-2];
         
-        if (nextPos.x == curX - 1) {
+        if (nextPos.x == curX - 1 && !eatable) {
             return Direction.HAUT;
+        }else if (nextPos.x == curX - 1 && eatable) {
+            if (j.getPlateau()[curX + 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX + 1][curY]).asGhost) {
+               return Direction.BAS; 
+            }
+            if (j.getPlateau()[curX][curY - 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY -1]).asGhost) {
+                return Direction.GAUCHE;
+            }
+            if (j.getPlateau()[curX][curY + 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX + 1][curY +1]).asGhost) {
+                return Direction.DROITE;
+            }
+            if (j.getPlateau()[curX - 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX - 1][curY]).asGhost) {
+                return Direction.HAUT;
+            }
         }
-        if (nextPos.x == curX + 1) {
+
+        if (nextPos.x == curX + 1 && !eatable) {
             return Direction.BAS;
+        }else if (nextPos.x == curX + 1 && eatable) {
+            if (j.getPlateau()[curX - 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX - 1][curY]).asGhost) {
+                return Direction.HAUT;
+            }
+            if (j.getPlateau()[curX][curY - 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY-1]).asGhost) {
+                return Direction.GAUCHE;
+            }
+            if (j.getPlateau()[curX][curY + 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY + 1]).asGhost) {
+                return Direction.DROITE;
+            }
+            if (j.getPlateau()[curX + 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX + 1][curY]).asGhost) {
+               return Direction.BAS; 
+            } 
         }
-        if (nextPos.y == curY - 1) {
+        if (nextPos.y == curY - 1 && !eatable) {
             return Direction.GAUCHE;
+        }else if (nextPos.y == curY - 1 && eatable) {
+            if (j.getPlateau()[curX][curY + 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY + 1]).asGhost) {
+                return Direction.DROITE;
+            }
+            if (j.getPlateau()[curX - 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX - 1][curY]).asGhost) {
+                return Direction.HAUT;
+            }
+            if (j.getPlateau()[curX + 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX + 1][curY]).asGhost) {
+               return Direction.BAS; 
+            }
+            if (j.getPlateau()[curX][curY - 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY - 1]).asGhost) {
+                return Direction.GAUCHE;
+            }
         }
-        if (nextPos.y == curY + 1) {
+        if (nextPos.y == curY + 1 && !eatable) {
             return Direction.DROITE;
+        }else if (nextPos.y == curY + 1 && eatable) {
+            if (j.getPlateau()[curX][curY - 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY - 1]).asGhost) {
+                return Direction.GAUCHE;
+            }
+            if (j.getPlateau()[curX - 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX - 1][curY]).asGhost) {
+                return Direction.HAUT;
+            }
+            if (j.getPlateau()[curX + 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX + 1][curY]).asGhost) {
+               return Direction.BAS; 
+            }
+            if (j.getPlateau()[curX][curY + 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY + 1]).asGhost) {
+                return Direction.DROITE;
+            }
         }
         return Direction.NOTFOUND;
     }

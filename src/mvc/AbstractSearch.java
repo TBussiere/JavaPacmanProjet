@@ -8,10 +8,17 @@ public class AbstractSearch {
         this.idGhost = idGhost;
         initSearch();
     }
+    public AbstractSearch(Jeu j,int idGhost,Position p) {
+        jeu = j;
+        this.idGhost = idGhost;
+        pasedGoal = p;
+        initSearch();
+    }
     //patern singleton
-    public Jeu getMaze() { return jeu; }
+    public Jeu getJeu() { return jeu; }
     protected Jeu jeu;
     protected int idGhost;
+    protected Position pasedGoal = null;
     /*
      * Java type Position (with width and height encoding x and y directions) is used for path finding
      */
@@ -31,8 +38,13 @@ public class AbstractSearch {
         pathCount = 0;
         startPos = jeu.getPosbyID(this.idGhost);
         currentPos = startPos;
-        //0 = pacman
-        goalPos = jeu.getPosbyID(0);
+        if (pasedGoal == null) {
+            //0 = pacman
+            goalPos = jeu.getPosbyID(0);
+        }else{
+            goalPos = pasedGoal;
+        }
+        
         searchPath[pathCount++] = currentPos;
     }
 

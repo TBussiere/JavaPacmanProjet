@@ -7,6 +7,10 @@ import java.util.Map;
 
 public class BFS extends AbstractSearch {
 
+    public BFS(Jeu j,int idGhost,Position goal) {
+        super(j,idGhost,goal);
+        performBFS();
+    }
     public BFS(Jeu j,int idGhost) {
         super(j,idGhost);
         performBFS();
@@ -41,7 +45,7 @@ public class BFS extends AbstractSearch {
         }
         
         if (findGoal) {
-            System.out.println("chemin trouvé");
+            //System.out.println("chemin trouvé");
             int temp = 0;
             int temp2 = 0;
             Position[][] realPredecessor;
@@ -99,7 +103,7 @@ public class BFS extends AbstractSearch {
             System.out.println("Path imposible");
         }
         
-        System.out.println("end");
+        //System.out.println("end");
     }
 
     protected class QueuePath {
