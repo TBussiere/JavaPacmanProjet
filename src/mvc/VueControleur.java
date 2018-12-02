@@ -254,7 +254,7 @@ public class VueControleur extends Application {
         play.setOnMousePressed(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent t) {
-                m.init(m.x, m.y, m.nbenemis);
+                m.init(m.xLength, m.yLength, m.nbenemis);
                 mainMenu.setVisible(false);
                 
             }

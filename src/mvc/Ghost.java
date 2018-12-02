@@ -65,7 +65,7 @@ public class Ghost extends Entite {
             deplacement(c, curX, curY, Xpop, Ypop);
             return;
         }
-        currentDirection = IA(c, curX, curY);
+        currentDirection = IAaStar(curX, curY);
 
         switch (currentDirection) {
             case HAUT:
@@ -124,8 +124,9 @@ public class Ghost extends Entite {
             }
         }
     }
-
-    private Direction IA(Case[][] c, int curX, int curY) {
+    
+    //IA RANDOM 
+    private Direction IARNG(Case[][] c, int curX, int curY) {
         Map<Direction, Float> MapDir;
         MapDir = new TreeMap<>();
         int nbNA = 0;
@@ -243,5 +244,27 @@ public class Ghost extends Entite {
             }
         }
         return res;
+    }
+    
+    
+    private Direction IAaStar(int curX, int curY){
+        BFS findPosToGo = new BFS(j,ID);
+        
+        Position[] path  = findPosToGo.getPath();
+        Position nextPos = path[path.length-2];
+        
+        if (nextPos.x == curX - 1) {
+            return Direction.HAUT;
+        }
+        if (nextPos.x == curX + 1) {
+            return Direction.BAS;
+        }
+        if (nextPos.y == curY - 1) {
+            return Direction.GAUCHE;
+        }
+        if (nextPos.y == curY + 1) {
+            return Direction.DROITE;
+        }
+        return Direction.NOTFOUND;
     }
 }

@@ -23,8 +23,8 @@ import javafx.application.Platform;
  * @author Lewho
  */
 public class Jeu extends Observable {
-    public int x;
-    public int y;
+    public int xLength;
+    public int yLength;
     public int nbenemis;
     
     private Case[][] plateau;
@@ -35,8 +35,8 @@ public class Jeu extends Observable {
     private int repopy = 9;
     private int repopTime = 5000;
     public Jeu(int x, int y, int nbenemis) {
-        this.x = x;
-        this.y = y;
+        this.xLength = x;
+        this.yLength = y;
         this.nbenemis = nbenemis;
     }
 
@@ -195,5 +195,22 @@ public class Jeu extends Observable {
         //((Couloir)this.plateau[repopx][repopy]).asGhost = true;
         //((Couloir)this.plateau[repopx][repopy]).idGhost = idGhost;
         
+    }
+
+    Position getPosbyID(int i) {
+        for (int j = 0; j < this.plateau.length; j++) {
+            for (int k = 0; k < this.plateau[j].length; k++) {
+                if (this.plateau[j][k] instanceof Couloir) {
+                    Couloir c = ((Couloir)this.plateau[j][k]);
+                    if (c.asPacman && i == 0) {
+                        return new Position(j,k);
+                    }
+                    if (c.idGhost == i) {
+                        return new Position(j,k);
+                    }
+                }
+            }
+        }
+        return new Position(-1,-1);
     }
 }
