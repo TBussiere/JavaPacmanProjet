@@ -22,9 +22,10 @@ public class Ghost extends Entite {
     public static int Ypop = 10;
     //private Color color;
     protected int ID;
-    private boolean pop = false;
-    private int popIn;
+    public boolean pop = false;
+    public int popIn;
     public boolean eatable = false;
+    public boolean dead = false;
 
     public Ghost(Jeu j, int id, int popIn) {
         this.j = j;
@@ -65,6 +66,13 @@ public class Ghost extends Entite {
             deplacement(c, curX, curY, Xpop, Ypop);
             return;
         }
+        
+        if (dead) {
+            dead = false;
+            j.entityGetEated(this.ID,this.ID, curX, curY);
+            return;
+        }
+        
         currentDirection = IAaStar(curX, curY);
 
         switch (currentDirection) {
@@ -114,14 +122,14 @@ public class Ghost extends Entite {
             ((Couloir) c[curX][curY]).idGhost = -1;
             ((Couloir) c[nextX][nextY]).asGhost = true;
             ((Couloir) c[nextX][nextY]).idGhost = this.ID;
-            if (((Couloir) c[nextX][nextY]).asPacman) {
-                if (((Pacman) j.getTabEntites()[0]).superPacman) {
-                    j.entityGetEated(this.ID, nextX, nextY);
-                }
+        }
+        if (((Couloir) c[nextX][nextY]).asPacman) {
+            if (((Pacman) j.getTabEntites()[0]).superPacman) {
+                j.entityGetEated(this.ID,this.ID, nextX, nextY);
             }
-            if (this.eatable) {
-                ((Couloir) c[nextX][nextY]).eatableGhost = true;
-            }
+        }
+        if (this.eatable) {
+            ((Couloir) c[nextX][nextY]).eatableGhost = true;
         }
     }
     
@@ -252,6 +260,9 @@ public class Ghost extends Entite {
         BFS findPosToGo = new BFS(j,ID);
         
         Position[] path  = findPosToGo.getPath();
+        if (path.length < 2) {
+            return Direction.NOTFOUND;
+        }
         Position nextPos = path[path.length-2];
         
         if (nextPos.x == curX - 1 && !eatable) {
@@ -263,7 +274,7 @@ public class Ghost extends Entite {
             if (j.getPlateau()[curX][curY - 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY -1]).asGhost) {
                 return Direction.GAUCHE;
             }
-            if (j.getPlateau()[curX][curY + 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX + 1][curY +1]).asGhost) {
+            if (j.getPlateau()[curX][curY + 1] instanceof Couloir && !((Couloir)j.getPlateau()[curX][curY +1]).asGhost) {
                 return Direction.DROITE;
             }
             if (j.getPlateau()[curX - 1][curY] instanceof Couloir && !((Couloir)j.getPlateau()[curX - 1][curY]).asGhost) {

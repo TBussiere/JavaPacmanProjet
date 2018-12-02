@@ -14,8 +14,8 @@ public class Pacman extends Entite {
     public int score;
     public boolean superPacman;
     public int curDurationSuperPacmen;
-    public int baseDurationSuperPacmen = 32;
-    
+    //public int baseDurationSuperPacmen = 32;
+    public int baseDurationSuperPacmen = 1000;
     
 
     public Pacman(Jeu j) {
@@ -88,6 +88,7 @@ public class Pacman extends Entite {
         }
         else if (this.superPacman && this.curDurationSuperPacmen<=0) {
             this.superPacman = false;
+            this.tempsEntreActions = 250;
             System.out.println(curDurationSuperPacmen);
             
             for (int i = 0; i < c.length; i++) {
@@ -131,13 +132,16 @@ public class Pacman extends Entite {
                 } else if (((Couloir) c[nextX][nextY]).super_Pac_Gomme) {
                     score += 500;
                     superPacman = true;
+                    this.tempsEntreActions = 150;
                     curDurationSuperPacmen = baseDurationSuperPacmen;
                     ((Couloir) c[nextX][nextY]).super_Pac_Gomme = false;
                 }
-                else if (((Couloir) c[nextX][nextY]).asGhost && this.superPacman) {
-                    j.entityGetEated(((Couloir) c[nextX][nextY]).idGhost, nextX, nextY);
-                }
             }
+        }        
+        
+        if (c[nextX][nextY] instanceof Couloir && ((Couloir) c[nextX][nextY]).asGhost && this.superPacman) {
+            j.entityGetEated(((Couloir) c[nextX][nextY]).idGhost, 0, nextX, nextY);
         }
+        
     }
 }

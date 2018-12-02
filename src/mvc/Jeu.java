@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,8 +32,8 @@ public class Jeu extends Observable {
     private Entite[] tabEntites;
     public boolean closeThreads;
     private List<Thread> tabThread;
-    private int repopx = 10;
-    private int repopy = 9;
+    private int repopx = 9;
+    private int repopy = 10;
     private int repopTime = 5000;
     public Jeu(int x, int y, int nbenemis) {
         this.xLength = x;
@@ -186,15 +187,29 @@ public class Jeu extends Observable {
         }
     }
 
-    public void entityGetEated(int idGhost, int x, int y) {
-        this.tabEntites[idGhost].running = false;
+    public void entityGetEated(int idGhost, int form, int x, int y) {
+        if (form == 0) {
+            ((Ghost)this.tabEntites[idGhost]).dead = true;
+            return;
+        }
+        
+        //this.tabEntites[idGhost].running = false;
         ((Couloir)this.plateau[x][y]).asGhost = false;
         ((Couloir)this.plateau[x][y]).idGhost = -1;
         
-        ((Pacman)this.tabEntites[0]).score += 5000;    
-        //((Couloir)this.plateau[repopx][repopy]).asGhost = true;
-        //((Couloir)this.plateau[repopx][repopy]).idGhost = idGhost;
+        ((Pacman)this.tabEntites[0]).score += 5000;
+        do {
+            try {
+                sleep(251);
+            } catch (InterruptedException ex) {
+            }
+        } while (((Couloir)this.plateau[repopx][repopy]).asGhost);
         
+        ((Couloir)this.plateau[repopx][repopy]).asGhost = true;
+        ((Couloir)this.plateau[repopx][repopy]).idGhost = idGhost;
+        
+        ((Ghost)this.tabEntites[idGhost]).pop = false;
+        ((Ghost)this.tabEntites[idGhost]).popIn = repopTime;  
     }
 
     Position getPosbyID(int i) {
@@ -211,6 +226,8 @@ public class Jeu extends Observable {
                 }
             }
         }
-        return new Position(-1,-1);
+        return new Position(1,1);
+        
+        //return null;
     }
 }
