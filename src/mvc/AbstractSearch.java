@@ -2,7 +2,7 @@ package mvc;
 
 
 
-public class AbstractSearch {
+public abstract class AbstractSearch {
     public AbstractSearch(Jeu j,int idGhost) {
         jeu = j;
         this.idGhost = idGhost;
