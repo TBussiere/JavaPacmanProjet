@@ -127,9 +127,11 @@ public class Pacman extends Entite {
                 ((Couloir) c[curX][curY]).asPacman = false;
                 ((Couloir) c[nextX][nextY]).asPacman = true;
                 if (((Couloir) c[nextX][nextY]).pac_Gomme) {
+                    j.eating =true;
                     score += 100;
                     ((Couloir) c[nextX][nextY]).pac_Gomme = false;
                 } else if (((Couloir) c[nextX][nextY]).super_Pac_Gomme) {
+                    j.eating = true;
                     score += 500;
                     superPacman = true;
                     this.tempsEntreActions = 150;

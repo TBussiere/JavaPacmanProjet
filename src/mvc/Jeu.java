@@ -30,6 +30,7 @@ public class Jeu extends Observable {
     private int repopx = 9;
     private int repopy = 10;
     private int repopTime = 5000;
+    boolean eating;
     public Jeu(int x, int y, int nbenemis) {
         this.xLength = x;
         this.yLength = y;
@@ -224,5 +225,22 @@ public class Jeu extends Observable {
         return new Position(1,1);
         
         //return null;
+    }
+
+    static int comparePlateau(Case[][] temp, Case[][] oldPlateau) {
+        for (int i = 0; i < temp.length; i++) {
+            for (int j = 0; j < temp[i].length; j++) {
+                if (temp[i][j] instanceof Couloir) {
+                    //System.out.println(((Couloir)temp[i][j]).pac_Gomme +" et " + ((Couloir)oldPlateau[i][j]).pac_Gomme);
+                    if (!((Couloir)temp[i][j]).pac_Gomme && ((Couloir)oldPlateau[i][j]).pac_Gomme) {
+                        return -1;
+                    }
+                    else if (((Couloir)temp[i][j]).pac_Gomme && !((Couloir)oldPlateau[i][j]).pac_Gomme) {
+                        return 1;
+                    }
+                }
+            }
+        }
+        return 0;
     }
 }
