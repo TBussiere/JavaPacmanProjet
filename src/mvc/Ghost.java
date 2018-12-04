@@ -71,8 +71,11 @@ public class Ghost extends Entite {
             return;
         }
         
-        //currentDirection = IAaStar(curX, curY);
-        currentDirection = IARNG(c,curX, curY);
+        currentDirection = IAaStar(curX, curY);
+        if (currentDirection == Direction.NOTFOUND) {
+            currentDirection = IARNG(c,curX, curY);
+        }
+        //currentDirection = IARNG(c,curX, curY);
         
         
         switch (currentDirection) {

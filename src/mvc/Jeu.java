@@ -37,7 +37,7 @@ public class Jeu extends Observable {
         this.nbenemis = nbenemis;
     }
 
-    public void init(int nbx, int nby, int nbent) {
+    public void init(int nbx, int nby, int nbent,String path) {
         nbent +=1;
         
         plateau = new Case[nbx][nby];
@@ -52,7 +52,7 @@ public class Jeu extends Observable {
         int curNb = 0;
 
         ////PLATEAU faire le truc sur fichier externe
-        File file = new File("./src/ressources/plan.txt");
+        File file = new File(path);
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String text = "";

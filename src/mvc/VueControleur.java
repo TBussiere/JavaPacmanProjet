@@ -13,6 +13,9 @@ import java.util.Observer;
 import javafx.application.Application;
 
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -24,6 +27,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.Node;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -33,6 +37,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.*;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
 
 /**
@@ -43,9 +48,9 @@ public class VueControleur extends Application {
 
     // modèle : ce qui réalise le calcule de l'expression
     Jeu m;
-    Text txt = new Text();
-    ImageView pacmanView = new ImageView(new Image("./ressources/pacman.gif"));
     Case[][] oldPlateau = null;
+
+    ImageView pacmanView = new ImageView(new Image("./ressources/pacman.gif"));
 
     Media pacmanIntroSound = new Media(new File("src/ressources/pacman_beginning.mp3").toURI().toString());
     Media pacmanEatingSound = new Media(new File("src/ressources/pacman_chomp2.wav").toURI().toString());
@@ -53,11 +58,19 @@ public class VueControleur extends Application {
     MediaPlayer eatingMusicPlayer = new MediaPlayer(pacmanEatingSound);
     Pane mainPane = new Pane();
     Button play = new Button();
-    Text endResultTxt = new Text();
+    Button changeMap = new Button();
+    Button goToEditeurBtn = new Button();
     Button returnMenu = new Button();
+    Button saveMapBtn = new Button();
+    Button cancelMapBtn = new Button();
+    GridPane editorGrid;
+    Text endResultTxt = new Text();
+    Text scoreTxt = new Text();
+    EditorModel edModel;
 
     int column = 21;
     int row = 21;
+    String mapPath = "./src/ressources/plan.txt";
 
     @Override
     public void start(Stage primaryStage) {
@@ -87,18 +100,13 @@ public class VueControleur extends Application {
             public void update(Observable o, Object arg) {
                 grid.getChildren().clear();
                 Case[][] temp = m.getPlateau();
-                
+
                 if (m.eating && (eatingMusicPlayer.getCurrentCount() == 1 || eatingMusicPlayer.getStatus() == MediaPlayer.Status.READY)) {
                     m.eating = false;
                     System.out.println("miam");
                     eatingMusicPlayer.stop();
                     eatingMusicPlayer.play();
                 }
-                else{
-                    //System.out.println(eatingMusicPlayer.getStatus());
-                }
-
-
                 for (int i = 0; i < temp.length; i++) {
                     for (int j = 0; j < temp[i].length; j++) {
                         Rectangle r = new Rectangle(30, 30);
@@ -166,7 +174,7 @@ public class VueControleur extends Application {
                     }
                 }
 
-                txt.setText("Score :" + ((Pacman) m.getTabEntites()[0]).score);
+                scoreTxt.setText("Score :" + ((Pacman) m.getTabEntites()[0]).score);
 
                 if (!m.finPartie()) {
                     endResultTxt.setText("GAME OVER");
@@ -175,19 +183,15 @@ public class VueControleur extends Application {
                     returnMenu.setVisible(true);
                 }
             }
-
-            private void syncronized(Observer aThis) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         };
 
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
         m.addObserver(obs);
         //obs.update(m, obs);
-        txt.setText(".");
-        txt.setFont(new Font(20));
-        txt.setFill(Color.WHITE);
-        MainGamePane.getChildren().add(txt);
+        scoreTxt.setText(".");
+        scoreTxt.setFont(new Font(20));
+        scoreTxt.setFill(Color.WHITE);
+        MainGamePane.getChildren().add(scoreTxt);
         MainGamePane.getStyleClass().add("bg-black-style");
         MainGamePane.setVisible(false);
         endResultTxt.setTranslateX(203);
@@ -209,8 +213,20 @@ public class VueControleur extends Application {
         BorderPane mainMenu = new BorderPane();
         play.setText("Jouer !");
         play.setMinHeight(30);
-        play.setMinWidth(100);
-        mainMenu.setCenter(play);
+        play.setMinWidth(150);
+        goToEditeurBtn.setText("Editeur de niveaux");
+        goToEditeurBtn.setMinHeight(30);
+        goToEditeurBtn.setMinWidth(150);
+        changeMap.setText("Changer la map..");
+        changeMap.setMinHeight(30);
+        changeMap.setMinWidth(150);
+        FlowPane paneBoutons = new FlowPane();
+        paneBoutons.setAlignment(Pos.TOP_CENTER);
+        paneBoutons.setOrientation(Orientation.VERTICAL);
+        paneBoutons.setVgap(20);
+        mainMenu.setCenter(paneBoutons);
+        paneBoutons.getChildren().addAll(play,changeMap, goToEditeurBtn);
+
         //mainMenu.setTranslateX(265);
         //mainMenu.setTranslateY(300);
         Image logoPacman = new Image("./ressources/pacman_logo.jpg");
@@ -219,9 +235,19 @@ public class VueControleur extends Application {
         IvLogo.setPreserveRatio(true);
         IvLogo.fitWidthProperty();
         mainMenu.setTop(IvLogo);
+
+        FlowPane editorScreen = new FlowPane();
+        editorGrid = new GridPane();
+        initgrid(editorGrid, column, row);
+        editorGrid.setGridLinesVisible(true);
+        saveMapBtn.setText("Save !");
+        cancelMapBtn.setText("Annuler");
+        editorScreen.getChildren().addAll(editorGrid, saveMapBtn,cancelMapBtn);
+        editorScreen.setVisible(false);
+
         mainPane.prefHeight(630);
         mainPane.prefWidth(630);
-        mainPane.getChildren().addAll(MainGamePane, mainMenu, endResultTxt, returnMenu);
+        mainPane.getChildren().addAll(MainGamePane, editorScreen, mainMenu, endResultTxt, returnMenu);
         mainPane.setMaxHeight(655);
         mainPane.setMaxWidth(630);
         mainPane.getStyleClass().add("bg-black-style");
@@ -259,7 +285,7 @@ public class VueControleur extends Application {
                         break;
                     case ENTER:
                         if (play.isVisible()) {
-                            m.init(m.xLength, m.yLength, m.nbenemis);
+                            m.init(m.xLength, m.yLength, m.nbenemis, mapPath);
                             mainMenu.setVisible(false);
                             play.setVisible(false);
                             MainGamePane.setVisible(true);
@@ -296,7 +322,7 @@ public class VueControleur extends Application {
         play.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
-                m.init(m.xLength, m.yLength, m.nbenemis);
+                m.init(m.xLength, m.yLength, m.nbenemis, mapPath);
                 mainMenu.setVisible(false);
                 play.setVisible(false);
                 MainGamePane.setVisible(true);
@@ -321,6 +347,126 @@ public class VueControleur extends Application {
             }
         });
 
+        goToEditeurBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                mainMenu.setVisible(false);
+                editorScreen.setVisible(true);
+                edModel = new EditorModel(column, row);
+            }
+
+        });
+
+        editorGrid.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                long x = Math.round(Math.floor(t.getX() / 30f));
+                long y = Math.round(Math.floor(t.getY() / 30f));
+
+                edModel.changeNode(x, y);
+                editorGrid.getChildren().removeAll();
+                String[][] strTab = edModel.getStrGrid();
+
+                for (int i = 0; i < strTab.length; i++) {
+                    for (int j = 0; j < strTab[i].length; j++) {
+                        Rectangle r = new Rectangle(30, 30);
+                        switch (strTab[i][j]) {
+                            case "m":
+                                r.setFill(Color.rgb(52, 93, 169));
+                                editorGrid.add(r, i, j);
+                                break;
+                            case "c":
+                                r.setFill(Color.BLACK);
+                                editorGrid.add(r, i, j);
+                                break;
+                            case "p":
+                                r.setFill(Color.BLACK);
+                                editorGrid.add(r, i, j);
+                                pacmanView = new ImageView(new Image("./ressources/pacman.gif"));
+                                pacmanView.setFitWidth(25);
+                                pacmanView.setFitHeight(25);
+                                editorGrid.add(pacmanView, i, j);
+                                break;
+                            case "f":
+                                r.setFill(Color.BLACK);
+                                editorGrid.add(r, i, j);
+                                ImageView ghostView = new ImageView();
+                                ghostView.setFitWidth(25);
+                                ghostView.setFitHeight(25);
+                                ghostView.setImage(new Image("./ressources/ghost_red.png"));
+                                editorGrid.add(ghostView, i, j);
+                                break;
+                            case "g":
+                                r.setFill(Color.BLACK);
+                                editorGrid.add(r, i, j);
+
+                                Circle circle = new Circle(5);
+                                BorderPane bp = new BorderPane();
+                                bp.setCenter(circle);
+                                circle.setFill(Color.BEIGE);
+                                editorGrid.add(bp, i, j);
+                                break;
+                            case "b":
+                                r.setFill(Color.BLACK);
+                                editorGrid.add(r, i, j);
+
+                                Circle circle2 = new Circle(8);
+                                BorderPane bp2 = new BorderPane();
+                                bp2.setCenter(circle2);
+                                circle2.setFill(Color.BEIGE);
+                                editorGrid.add(bp2, i, j);
+                                break;
+                        }
+                    }
+                }
+            }
+        });
+
+        saveMapBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                FileChooser fileChooser = new FileChooser();
+
+                //Set extension filter for text files
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                fileChooser.getExtensionFilters().add(extFilter);
+
+                //Show save file dialog
+                File file = fileChooser.showSaveDialog(primaryStage);
+
+                if (file != null) {
+                    edModel.exportToString(file);
+                    mainMenu.setVisible(true);
+                    editorScreen.setVisible(false);
+                }
+            }
+        });
+        cancelMapBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                mainMenu.setVisible(true);
+                editorScreen.setVisible(false);
+            }
+        });
+        
+        changeMap.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                FileChooser fileChooser = new FileChooser();
+
+                //Set extension filter for text files
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                fileChooser.getExtensionFilters().add(extFilter);
+                
+                //Show save file dialog
+                File file = fileChooser.showOpenDialog(primaryStage);
+                
+                if (file != null) {
+                    mapPath = file.getPath();
+                }
+            }
+        });
+
         primaryStage.setTitle("Pacman");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -331,6 +477,15 @@ public class VueControleur extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    void initgrid(GridPane g, int editLengthx, int editLengthy) {
+        for (int i = 0; i < editLengthx; i++) {
+            for (int j = 0; j < editLengthy; j++) {
+                Rectangle rec = new Rectangle(30, 30);
+                g.add(rec, i, j);
+            }
+        }
     }
 
 }
