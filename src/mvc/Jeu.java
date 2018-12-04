@@ -7,16 +7,11 @@ package mvc;
 
 import java.io.BufferedReader;
 import java.util.Observable;
-import java.util.Observer;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 
 /**

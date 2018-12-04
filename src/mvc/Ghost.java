@@ -9,8 +9,6 @@ import static java.lang.Thread.sleep;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  *

@@ -7,36 +7,28 @@
 package mvc;
 
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
 
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Shadow;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.*;
@@ -54,16 +46,21 @@ public class VueControleur extends Application {
     Text txt = new Text();
     ImageView pacmanView = new ImageView(new Image("./ressources/pacman.gif"));
     
-    Pane MainPane = new Pane();
+    Media pacmanSound = new Media(new File("src/ressources/pacman_beginning.mp3").toURI().toString());
+    MediaPlayer player = new MediaPlayer(pacmanSound);
+    
+    Pane mainPane = new Pane();
     Button play = new Button();
-    Text EndResultTxt = new Text();
+    Text endResultTxt = new Text();
+    Button returnMenu = new Button();
     
     int column = 21;
     int row = 21;
 
     @Override
     public void start(Stage primaryStage) {
-        
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.play();
         // initialisation du modèle que l'on souhaite utiliser
         m = new Jeu(column,row,4);
         
@@ -159,8 +156,10 @@ public class VueControleur extends Application {
                 txt.setText("Score :" + ((Pacman)m.getTabEntites()[0]).score);
                 
                 if (!m.finPartie()) {
-                    EndResultTxt.setText("GAME OVER");
-                    EndResultTxt.setVisible(true);
+                    endResultTxt.setText("GAME OVER");
+                    returnMenu.setText("Retour menu");
+                    endResultTxt.setVisible(true);
+                    returnMenu.setVisible(true);
                 }
             }
         };
@@ -173,15 +172,22 @@ public class VueControleur extends Application {
         txt.setFill(Color.WHITE);
         MainGamePane.getChildren().add(txt);
         MainGamePane.getStyleClass().add("bg-black-style");
-        EndResultTxt.setTranslateX(203);
-        EndResultTxt.setTranslateY(330);
-        EndResultTxt.setTextAlignment(TextAlignment.CENTER);
-        EndResultTxt.setText("");
-        EndResultTxt.setFont(new Font(40));
-        EndResultTxt.setFill(Color.WHITE);
-        EndResultTxt.setStroke(Color.YELLOW);
-        EndResultTxt.setStrokeWidth(1);
-        EndResultTxt.setVisible(false);
+        MainGamePane.setVisible(false);
+        endResultTxt.setTranslateX(203);
+        endResultTxt.setTranslateY(330);
+        endResultTxt.setTextAlignment(TextAlignment.CENTER);
+        endResultTxt.setText("");
+        endResultTxt.setFont(new Font(40));
+        endResultTxt.setFill(Color.WHITE);
+        endResultTxt.setStroke(Color.YELLOW);
+        endResultTxt.setStrokeWidth(1);
+        endResultTxt.setVisible(false);
+        returnMenu.setTranslateX(265);
+        returnMenu.setTranslateY(350);
+        returnMenu.setText("");
+        returnMenu.setMinHeight(30);
+        returnMenu.setMinWidth(100);
+        returnMenu.setVisible(false);
         
         BorderPane mainMenu = new BorderPane();
         play.setText("Jouer !");
@@ -196,14 +202,14 @@ public class VueControleur extends Application {
         IvLogo.setPreserveRatio(true);
         IvLogo.fitWidthProperty();
         mainMenu.setTop(IvLogo);
-
-        MainPane.prefHeight(630);
-        MainPane.prefWidth(630);
-        MainPane.getChildren().addAll(MainGamePane,mainMenu,EndResultTxt);
-        MainPane.setMaxHeight(655);
-        MainPane.setMaxWidth(630);
+        mainPane.prefHeight(630);
+        mainPane.prefWidth(630);
+        mainPane.getChildren().addAll(MainGamePane,mainMenu,endResultTxt,returnMenu);
+        mainPane.setMaxHeight(655);
+        mainPane.setMaxWidth(630);
+        mainPane.getStyleClass().add("bg-black-style");
         
-        Scene scene = new Scene(MainPane, Color.BLACK);
+        Scene scene = new Scene(mainPane, Color.BLACK);
         scene.getStylesheets().add("ressources/css-file.css");
        
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
@@ -256,11 +262,26 @@ public class VueControleur extends Application {
             public void handle(MouseEvent t) {
                 m.init(m.xLength, m.yLength, m.nbenemis);
                 mainMenu.setVisible(false);
-                
+                MainGamePane.setVisible(true);
+                player.pause();
             }
         });
         
-               
+        returnMenu.setOnMousePressed(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent t) {
+                m.stopAllThread();
+                grid.getChildren().clear();
+                endResultTxt.setVisible(false);
+                returnMenu.setVisible(false);
+                MainGamePane.setVisible(false);
+                m = new Jeu(column,row,4);
+                m.addObserver(obs);
+                mainMenu.setVisible(true);
+                player.play();
+            }
+        });
+              
         
         primaryStage.setTitle("Pacman");
         primaryStage.setScene(scene);
