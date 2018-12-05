@@ -7,13 +7,11 @@
 package mvc;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
 
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,7 +25,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.Node;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -351,6 +348,7 @@ public class VueControleur extends Application {
             @Override
             public void handle(MouseEvent t) {
                 mainMenu.setVisible(false);
+                introMusicPlayer.pause();
                 editorScreen.setVisible(true);
                 edModel = new EditorModel(column, row);
             }
@@ -442,10 +440,12 @@ public class VueControleur extends Application {
                 }
             }
         });
+        
         cancelMapBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 mainMenu.setVisible(true);
+                introMusicPlayer.play();
                 editorScreen.setVisible(false);
             }
         });
