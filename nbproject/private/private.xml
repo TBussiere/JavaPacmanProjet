@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/projetnul/pacman/src/mvc/Position.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Pacman.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/VueControleur.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Ghost.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Entite.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Direction.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Couloir.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/AbstractSearch.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/BFS.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Jeu.java</file>
+            <file>file:/C:/Users/Lewho/Documents/NetBeansProjects/Pacman/src/mvc/Jeu.java</file>
+            <file>file:/C:/Users/Lewho/Documents/NetBeansProjects/Pacman/src/mvc/Couloir.java</file>
+            <file>file:/C:/Users/Lewho/Documents/NetBeansProjects/Pacman/src/mvc/Mur.java</file>
+            <file>file:/C:/Users/Lewho/Documents/NetBeansProjects/Pacman/src/mvc/Pacman.java</file>
+            <file>file:/C:/Users/Lewho/Documents/NetBeansProjects/Pacman/src/mvc/Entite.java</file>
+            <file>file:/C:/Users/Lewho/Documents/NetBeansProjects/Pacman/src/mvc/Case.java</file>
+            <file>file:/C:/Users/Lewho/Documents/NetBeansProjects/Pacman/src/mvc/Ghost.java</file>
+            <file>file:/C:/Users/Lewho/Documents/NetBeansProjects/Pacman/src/mvc/VueControleur.java</file>
         </group>
     </open-files>
 </project-private>

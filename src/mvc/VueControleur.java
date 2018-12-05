@@ -103,7 +103,7 @@ public class VueControleur extends Application {
 
                 if (m.eating && (eatingMusicPlayer.getCurrentCount() == 1 || eatingMusicPlayer.getStatus() == MediaPlayer.Status.READY)) {
                     m.eating = false;
-                    System.out.println("miam");
+                    //System.out.println("miam");
                     eatingMusicPlayer.stop();
                     eatingMusicPlayer.play();
                 }
@@ -430,6 +430,7 @@ public class VueControleur extends Application {
                 //Set extension filter for text files
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
                 fileChooser.getExtensionFilters().add(extFilter);
+                fileChooser.setInitialDirectory(new File("."));
 
                 //Show save file dialog
                 File file = fileChooser.showSaveDialog(primaryStage);
@@ -457,6 +458,8 @@ public class VueControleur extends Application {
                 //Set extension filter for text files
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
                 fileChooser.getExtensionFilters().add(extFilter);
+                fileChooser.setInitialDirectory(new File("."));
+                
                 
                 //Show save file dialog
                 File file = fileChooser.showOpenDialog(primaryStage);
