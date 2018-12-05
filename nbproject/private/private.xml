@@ -3,16 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/projetnul/pacman/src/mvc/Position.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Pacman.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/VueControleur.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Ghost.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Entite.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Direction.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Couloir.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/AbstractSearch.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/BFS.java</file>
-            <file>file:/F:/projetnul/pacman/src/mvc/Jeu.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/TypeGomme.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/EditorModel.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Entite.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Couloir.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Position.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Mur.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Case.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Jeu.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Direction.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/BFS.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Ghost.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/VueControleur.java</file>
+            <file>file:/D:/Documents/Licence/POO/pacman/src/mvc/Pacman.java</file>
         </group>
     </open-files>
 </project-private>
