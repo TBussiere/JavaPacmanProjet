@@ -351,6 +351,7 @@ public class VueControleur extends Application {
             @Override
             public void handle(MouseEvent t) {
                 mainMenu.setVisible(false);
+                introMusicPlayer.pause();
                 editorScreen.setVisible(true);
                 edModel = new EditorModel(column, row);
             }
@@ -441,10 +442,12 @@ public class VueControleur extends Application {
                 }
             }
         });
+        
         cancelMapBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 mainMenu.setVisible(true);
+                introMusicPlayer.play();
                 editorScreen.setVisible(false);
             }
         });
