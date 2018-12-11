@@ -12,6 +12,8 @@ import java.io.FileReader;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
+
+//POUR appeler la thread de vue
 import javafx.application.Platform;
 
 /**
