@@ -70,16 +70,24 @@ public abstract class AbstractSearch {
         Case[][] plat = jeu.getPlateau();
         
         if (x>0 && x<jeu.xLength-1 && plat[x - 1][y] instanceof Couloir) {
-            tempMoves[num++] = new Position(x - 1, y);
+            if (!((Couloir)plat[x - 1][y]).asGhost) {
+                tempMoves[num++] = new Position(x - 1, y);
+            }
         }
         if (x>0 && x<jeu.xLength-1 && plat[x + 1][y] instanceof Couloir) {
-            tempMoves[num++] = new Position(x + 1, y);
+            if (!((Couloir)plat[x + 1][y]).asGhost) {
+                tempMoves[num++] = new Position(x + 1, y);
+            }
         }
         if (y>0 && y<jeu.yLength-1 && plat[x][y - 1] instanceof Couloir) {
-            tempMoves[num++] = new Position(x, y - 1);
+            if (!((Couloir)plat[x][y - 1]).asGhost) {
+                tempMoves[num++] = new Position(x, y - 1);
+            }
         }
-        if (y>0 && y<jeu.yLength-1 && plat[x][y + 1] instanceof Couloir) {
-            tempMoves[num++] = new Position(x, y + 1);
+        if ( (y>0) && (y<jeu.yLength-1) && (plat[x][y + 1] instanceof Couloir)) {
+            if (!((Couloir)plat[x][y + 1]).asGhost) {
+                tempMoves[num++] = new Position(x, y + 1);
+            }
         }
         return tempMoves;
     }
